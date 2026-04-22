@@ -19,534 +19,142 @@
     --shadow: rgba(26,18,8,0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
 
-  /* AUTH SCREEN */
   #auth-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
     background: var(--ink);
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 40px,
-      rgba(200,169,110,0.04) 40px,
-      rgba(200,169,110,0.04) 41px
-    );
+    background-image: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(200,169,110,0.04) 40px,rgba(200,169,110,0.04) 41px);
   }
-  .auth-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 3rem 2.5rem;
-    text-align: center;
-    max-width: 380px;
-    width: 90%;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-  }
-  .auth-card h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--ink);
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-  }
-  .auth-card p {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
-    margin-bottom: 2rem;
-  }
-  .google-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    padding: 0.9rem 1.5rem;
-    width: 100%;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+  .auth-card { background: var(--card); border: 1px solid var(--border); padding: 3rem 2.5rem; text-align: center; max-width: 380px; width: 90%; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+  .auth-card h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.5rem; }
+  .auth-card p { font-size: 0.85rem; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; margin-bottom: 2rem; }
+  .google-btn { display: flex; align-items: center; justify-content: center; gap: 0.75rem; background: var(--ink); color: var(--paper); border: none; padding: 0.9rem 1.5rem; width: 100%; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
   .google-btn:hover { background: var(--accent); }
   .google-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 
-  /* MAIN APP */
   #app { display: none; min-height: 100vh; }
-
-  /* HEADER */
-  header {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .header-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
+  header { background: var(--ink); color: var(--paper); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .header-brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
   .header-brand span { color: var(--warm); }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .user-info {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-  .signout-btn {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--paper);
-    padding: 0.35rem 0.75rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .user-info { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .signout-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: var(--paper); padding: 0.35rem 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; cursor: pointer; transition: border-color 0.2s; }
   .signout-btn:hover { border-color: var(--warm); color: var(--warm); }
 
-  /* NAV TABS */
-  nav {
-    background: var(--cream);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    padding: 0 2rem;
-    gap: 0;
-    overflow-x: auto;
-  }
-  .nav-tab {
-    padding: 0.85rem 1.25rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
+  nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; padding: 0 2rem; overflow-x: auto; }
+  .nav-tab { padding: 0.85rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .nav-tab:hover { color: var(--ink); }
   .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* MAIN CONTENT */
   main { padding: 2rem; max-width: 1100px; margin: 0 auto; }
-
-  /* PAGE SECTIONS */
   .page { display: none; }
   .page.active { display: block; }
+  .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
 
-  /* SECTION HEADER */
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-  }
-
-  /* BUTTONS */
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 0.65rem 1.25rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.65rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
   .btn-primary:hover { opacity: 0.85; }
-  .btn-secondary {
-    background: none;
-    color: var(--ink);
-    border: 1px solid var(--border);
-    padding: 0.65rem 1.25rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
+  .btn-secondary { background: none; color: var(--ink); border: 1px solid var(--border); padding: 0.65rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; cursor: pointer; transition: border-color 0.2s; }
   .btn-secondary:hover { border-color: var(--ink); }
-  .btn-danger {
-    background: none;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 0.4rem 0.8rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .btn-danger { background: none; color: var(--accent); border: 1px solid var(--accent); padding: 0.4rem 0.8rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; }
   .btn-danger:hover { background: var(--accent); color: white; }
-  .btn-sm {
-    background: none;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 0.35rem 0.7rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .btn-sm { background: none; color: var(--muted); border: 1px solid var(--border); padding: 0.35rem 0.7rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; }
   .btn-sm:hover { color: var(--ink); border-color: var(--ink); }
+  .btn-add-loc { background: none; color: var(--sage); border: 1px dashed rgba(90,122,90,0.5); padding: 0.45rem 0.9rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 0.5rem; }
+  .btn-add-loc:hover { border-color: var(--sage); background: rgba(90,122,90,0.06); }
 
-  /* CARDS */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 4px var(--shadow);
-  }
-
-  /* SPONSOR LIST */
   .sponsor-grid { display: grid; gap: 1rem; }
-  .sponsor-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    box-shadow: 0 1px 4px var(--shadow);
-    transition: border-color 0.2s;
-  }
+  .sponsor-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; box-shadow: 0 1px 4px var(--shadow); transition: border-color 0.2s; }
   .sponsor-card:hover { border-color: var(--warm); }
-  .sponsor-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-  }
-  .sponsor-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-  .sponsor-status {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: 0;
-  }
-  .status-active { background: rgba(90,122,90,0.15); color: var(--sage); border: 1px solid rgba(90,122,90,0.3); }
-  .status-inactive { background: rgba(138,127,110,0.12); color: var(--muted); border: 1px solid var(--border); }
+  .sponsor-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .sponsor-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .sponsor-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); line-height: 1.7; }
+  .sponsor-status { display: inline-block; padding: 0.2rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .status-active   { background: rgba(90,122,90,0.15);  color: var(--sage);   border: 1px solid rgba(90,122,90,0.3); }
+  .status-inactive { background: rgba(138,127,110,0.12); color: var(--muted);  border: 1px solid var(--border); }
+  .status-pending  { background: rgba(200,169,110,0.15); color: #7a6030;       border: 1px solid rgba(200,169,110,0.4); }
   .sponsor-actions { display: flex; gap: 0.5rem; align-items: flex-start; flex-shrink: 0; }
 
-  /* DROP-IN LIST */
-  .dropin-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--warm);
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 0.75rem;
-    box-shadow: 0 1px 4px var(--shadow);
-  }
-  .dropin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-  .dropin-location {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  .dropin-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-  .dropin-stats {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+  .sponsor-locations { margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .sponsor-locations-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
+  .location-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--cream); border: 1px solid var(--border); padding: 0.25rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; margin: 0.2rem 0.2rem 0.2rem 0; }
+
+  .dropin-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--warm); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 4px var(--shadow); }
+  .dropin-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .dropin-location { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .dropin-sublocation { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+  .dropin-date { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .dropin-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .stat-item { text-align: center; }
-  .stat-val {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    display: block;
-  }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; display: block; }
   .stat-val.added { color: var(--sage); }
   .stat-val.removed { color: var(--accent); }
   .stat-val.neutral { color: var(--ink); }
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .dropin-notes {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-top: 0.5rem;
-    font-style: italic;
-  }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .dropin-notes { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
 
-  /* STATS DASHBOARD */
-  .stats-controls {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .period-btn {
-    background: none;
-    border: 1px solid var(--border);
-    padding: 0.45rem 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    color: var(--muted);
-    transition: all 0.2s;
-  }
+  .stats-controls { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .period-btn { background: none; border: 1px solid var(--border); padding: 0.45rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; color: var(--muted); transition: all 0.2s; }
   .period-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .period-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 1px 4px var(--shadow);
-  }
-  .stat-card .big-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-  .stat-card .big-num.accent { color: var(--accent); }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; box-shadow: 0 1px 4px var(--shadow); }
+  .stat-card .big-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
   .stat-card .big-num.sage { color: var(--sage); }
+  .stat-card .big-num.accent { color: var(--accent); }
   .stat-card .big-num.warm { color: var(--warm); }
-  .stat-card .stat-desc {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-  }
-  .recent-activity h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
+  .stat-card .stat-desc { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .recent-activity h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 1rem; }
 
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,18,8,0.6);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,18,8,0.6); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    width: 100%;
-    max-width: 520px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 12px 60px rgba(0,0,0,0.35);
-  }
-  .modal-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-  }
+  .modal { background: var(--card); border: 1px solid var(--border); padding: 2rem; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 60px rgba(0,0,0,0.35); }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; }
 
-  /* FORMS */
   .form-group { margin-bottom: 1.1rem; }
-  .form-label {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    margin-bottom: 0.4rem;
-  }
-  .form-input, .form-select, .form-textarea {
-    width: 100%;
-    padding: 0.65rem 0.85rem;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .form-label { display: block; font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.4rem; }
+  .form-input, .form-select, .form-textarea { width: 100%; padding: 0.65rem 0.85rem; background: var(--paper); border: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none; transition: border-color 0.2s; }
   .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--warm); }
   .form-textarea { resize: vertical; min-height: 80px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
 
-  /* DROPIN FORM SPECIFIC */
-  .inventory-summary {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    padding: 1rem 1.25rem;
-    margin: 1rem 0;
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+  .locations-section { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .locations-section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.75rem; }
+  .location-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+  .location-row input { flex: 1; padding: 0.55rem 0.75rem; background: var(--paper); border: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; }
+  .location-row input:focus { border-color: var(--warm); }
+  .loc-remove-btn { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; padding: 0.2rem 0.4rem; line-height: 1; flex-shrink: 0; }
+  .loc-remove-btn:hover { color: var(--accent); }
+
+  .step-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--warm); margin-bottom: 0.35rem; }
+  .inventory-summary { background: var(--cream); border: 1px solid var(--border); padding: 1rem 1.25rem; margin: 1rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .inv-item { text-align: center; }
-  .inv-val {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    display: block;
-  }
-  .inv-lbl {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .redist-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
+  .inv-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; display: block; }
+  .inv-lbl { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
+  .redist-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
 
-  /* EMPTY STATE */
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--muted);
-  }
-  .empty-state .empty-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.4;
-  }
-  .empty-state p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.82rem;
-    letter-spacing: 0.03em;
-  }
-
-  /* LOADING */
-  .loading {
-    text-align: center;
-    padding: 3rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.82rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  /* TOAST */
-  #toast {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 0.85rem 1.25rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    z-index: 9999;
-    transform: translateY(120%);
-    transition: transform 0.3s ease;
-    max-width: 300px;
-  }
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+  .empty-state p { font-family: 'DM Mono', monospace; font-size: 0.82rem; letter-spacing: 0.03em; }
+  .loading { text-align: center; padding: 3rem; font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--muted); letter-spacing: 0.05em; }
+  #toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--ink); color: var(--paper); padding: 0.85rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.8rem; z-index: 9999; transform: translateY(120%); transition: transform 0.3s ease; max-width: 300px; }
   #toast.show { transform: translateY(0); }
   #toast.success { border-left: 3px solid var(--sage); }
   #toast.error { border-left: 3px solid var(--accent); }
-
-  /* FILTER ROW */
-  .filter-row {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .filter-row input {
-    padding: 0.5rem 0.85rem;
-    border: 1px solid var(--border);
-    background: var(--card);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--ink);
-    outline: none;
-    flex: 1;
-    min-width: 180px;
-  }
+  .filter-row { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+  .filter-row input { padding: 0.5rem 0.85rem; border: 1px solid var(--border); background: var(--card); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; flex: 1; min-width: 180px; }
   .filter-row input:focus { border-color: var(--warm); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 </style>
 </head>
 <body>
 
-<!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-card">
     <h1>Book a<br><span style="color:var(--accent)">Neighbor</span></h1>
-    <p>inventory & sponsor tracker</p>
+    <p>inventory &amp; sponsor tracker</p>
     <button class="google-btn" onclick="signInWithGoogle()">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -559,7 +167,6 @@
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div id="app">
   <header>
     <div class="header-brand">Book a <span>Neighbor</span></div>
@@ -569,16 +176,14 @@
     </div>
   </header>
   <nav>
-    <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
-    <button class="nav-tab" onclick="showPage('sponsors')">Sponsors</button>
-    <button class="nav-tab" onclick="showPage('dropins')">Drop-ins</button>
+    <button class="nav-tab active" onclick="showPage('dashboard',this)">Dashboard</button>
+    <button class="nav-tab" onclick="showPage('sponsors',this)">Sponsors</button>
+    <button class="nav-tab" onclick="showPage('dropins',this)">Drop-ins</button>
   </nav>
   <main>
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
-      <div class="section-header">
-        <div class="section-title">Overview</div>
-      </div>
+      <div class="section-header"><div class="section-title">Overview</div></div>
       <div class="stats-controls">
         <button class="period-btn active" onclick="setPeriod('week',this)">Week</button>
         <button class="period-btn" onclick="setPeriod('month',this)">Month</button>
@@ -586,11 +191,11 @@
         <button class="period-btn" onclick="setPeriod('year',this)">Year</button>
         <button class="period-btn" onclick="setPeriod('all',this)">All time</button>
       </div>
-      <div class="stats-grid" id="stats-grid">
+      <div class="stats-grid">
         <div class="stat-card"><div class="big-num sage" id="stat-placed">—</div><div class="stat-desc">Books Placed</div></div>
         <div class="stat-card"><div class="big-num accent" id="stat-redistributed">—</div><div class="stat-desc">Redistributed</div></div>
         <div class="stat-card"><div class="big-num warm" id="stat-discarded">—</div><div class="stat-desc">Discarded</div></div>
-        <div class="stat-card"><div class="big-num neutral" id="stat-visits">—</div><div class="stat-desc">Drop-in Visits</div></div>
+        <div class="stat-card"><div class="big-num" id="stat-visits">—</div><div class="stat-desc">Drop-in Visits</div></div>
       </div>
       <div class="recent-activity">
         <h3>Recent Drop-ins</h3>
@@ -609,6 +214,7 @@
         <select class="form-select" id="sponsor-status-filter" onchange="renderSponsors()" style="width:auto;flex:unset;">
           <option value="">All</option>
           <option value="active">Active</option>
+          <option value="pending">Pending Install</option>
           <option value="inactive">Inactive</option>
         </select>
       </div>
@@ -648,6 +254,7 @@
         <label class="form-label">Status</label>
         <select class="form-select" id="s-status">
           <option value="active">Active</option>
+          <option value="pending">Pending Install</option>
           <option value="inactive">Inactive</option>
         </select>
       </div>
@@ -663,12 +270,13 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Address</label>
-      <input class="form-input" id="s-address" placeholder="123 Main St, Riverside, CA">
-    </div>
-    <div class="form-group">
       <label class="form-label">Notes</label>
       <textarea class="form-textarea" id="s-notes" placeholder="Any relevant notes..."></textarea>
+    </div>
+    <div class="locations-section">
+      <div class="locations-section-label">Locations</div>
+      <div id="locations-list"></div>
+      <button class="btn-add-loc" onclick="addLocationRow()">+ Add Location</button>
     </div>
     <div class="form-actions">
       <button class="btn-secondary" onclick="closeSponsorModal()">Cancel</button>
@@ -681,12 +289,19 @@
 <div class="modal-overlay" id="dropin-modal">
   <div class="modal">
     <div class="modal-title">Log Drop-in</div>
-    <div class="form-group">
-      <label class="form-label">Location (Sponsor) *</label>
-      <select class="form-select" id="d-sponsor" onchange="updateDropinCalc()">
+    <div style="margin-bottom:0.75rem">
+      <div class="step-label">Step 1 — Sponsor</div>
+      <select class="form-select" id="d-sponsor" onchange="onSponsorChange()">
         <option value="">Select a sponsor...</option>
       </select>
     </div>
+    <div id="d-location-step" style="display:none;margin-bottom:0.75rem">
+      <div class="step-label">Step 2 — Location</div>
+      <select class="form-select" id="d-location">
+        <option value="">Select a location...</option>
+      </select>
+    </div>
+    <hr class="divider">
     <div class="form-group">
       <label class="form-label">Date *</label>
       <input class="form-input" id="d-date" type="date">
@@ -722,7 +337,7 @@
         Redistributed + Discarded must equal books removed.
       </div>
     </div>
-    <div class="inventory-summary" id="inv-summary">
+    <div class="inventory-summary">
       <div class="inv-item"><span class="inv-val" id="inv-before">0</span><span class="inv-lbl">Arrived</span></div>
       <div class="inv-item"><span class="inv-val" style="color:var(--sage)" id="inv-added">+0</span><span class="inv-lbl">Added</span></div>
       <div class="inv-item"><span class="inv-val" style="color:var(--accent)" id="inv-removed">-0</span><span class="inv-lbl">Removed</span></div>
@@ -739,10 +354,8 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
-<!-- FIREBASE + APP LOGIC -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -758,24 +371,21 @@ const firebaseConfig = {
   measurementId: "G-KEZSNJZ4JW"
 };
 
-const app = initializeApp(firebaseConfig);
+const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db   = getFirestore(app);
 
-// COLLECTIONS (namespaced)
 const SPONSORS_COL = 'bookANeighbor_sponsors';
-const DROPINS_COL = 'bookANeighbor_dropins';
+const DROPINS_COL  = 'bookANeighbor_dropins';
 
-// STATE
 let sponsors = [];
-let dropins = [];
+let dropins  = [];
 let editingSponsorId = null;
-let currentPeriod = 'week';
+let currentPeriod    = 'week';
 
-// ─── AUTH ────────────────────────────────────────────────────────────────────
+// AUTH
 window.signInWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  try { await signInWithPopup(auth, provider); }
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
   catch(e) { showToast('Sign-in failed: ' + e.message, 'error'); }
 };
 window.signOut = () => fbSignOut(auth);
@@ -792,7 +402,7 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-// ─── DATA LOADING ────────────────────────────────────────────────────────────
+// DATA
 async function loadAll() {
   await Promise.all([loadSponsors(), loadDropins()]);
   renderSponsors();
@@ -800,69 +410,74 @@ async function loadAll() {
   populateSponsorSelects();
   renderDashboard();
 }
-
 async function loadSponsors() {
-  const q = query(collection(db, SPONSORS_COL), orderBy('name'));
-  const snap = await getDocs(q);
+  const snap = await getDocs(query(collection(db, SPONSORS_COL), orderBy('name')));
   sponsors = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
-
 async function loadDropins() {
-  const q = query(collection(db, DROPINS_COL), orderBy('date', 'desc'));
-  const snap = await getDocs(q);
+  const snap = await getDocs(query(collection(db, DROPINS_COL), orderBy('date', 'desc')));
   dropins = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-// ─── NAVIGATION ──────────────────────────────────────────────────────────────
-window.showPage = (page) => {
+// NAV
+window.showPage = (page, btn) => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 };
 
-// ─── SPONSORS ────────────────────────────────────────────────────────────────
+// SPONSORS
 window.renderSponsors = () => {
-  const search = document.getElementById('sponsor-search').value.toLowerCase();
-  const statusFilter = document.getElementById('sponsor-status-filter').value;
-  let filtered = sponsors.filter(s => {
-    const matchSearch = !search || s.name.toLowerCase().includes(search) ||
+  const search = (document.getElementById('sponsor-search').value || '').toLowerCase();
+  const sf     = document.getElementById('sponsor-status-filter').value;
+  const filtered = sponsors.filter(s => {
+    const matchSearch = !search ||
+      s.name.toLowerCase().includes(search) ||
       (s.contact||'').toLowerCase().includes(search) ||
-      (s.address||'').toLowerCase().includes(search);
-    const matchStatus = !statusFilter || s.status === statusFilter;
-    return matchSearch && matchStatus;
+      (s.locations||[]).some(l => l.toLowerCase().includes(search));
+    return matchSearch && (!sf || s.status === sf);
   });
   const el = document.getElementById('sponsor-list');
   if (!filtered.length) {
     el.innerHTML = `<div class="empty-state"><div class="empty-icon">📚</div><p>No sponsors yet. Add your first one.</p></div>`;
     return;
   }
-  el.innerHTML = `<div class="sponsor-grid">${filtered.map(s => `
-    <div class="sponsor-card">
-      <div>
-        <div class="sponsor-name">${esc(s.name)}</div>
-        <div class="sponsor-meta">
-          ${s.contact ? esc(s.contact) + '<br>' : ''}
-          ${s.email ? esc(s.email) + '<br>' : ''}
-          ${s.phone ? esc(s.phone) + '<br>' : ''}
-          ${s.address ? esc(s.address) : ''}
-          ${s.notes ? '<br><em style="color:var(--muted)">' + esc(s.notes) + '</em>' : ''}
+  const statusLabel = { active:'Active', pending:'Pending Install', inactive:'Inactive' };
+  el.innerHTML = `<div class="sponsor-grid">${filtered.map(s => {
+    const locs = s.locations || [];
+    const sl   = statusLabel[s.status] || 'Active';
+    return `<div class="sponsor-card">
+      <div class="sponsor-card-header">
+        <div>
+          <div class="sponsor-name">${esc(s.name)}</div>
+          <div class="sponsor-meta">
+            ${s.contact ? esc(s.contact)+'<br>' : ''}
+            ${s.email   ? esc(s.email)+'<br>'   : ''}
+            ${s.phone   ? esc(s.phone)+'<br>'   : ''}
+            ${s.notes   ? '<em>'+esc(s.notes)+'</em>' : ''}
+          </div>
+        </div>
+        <div class="sponsor-actions">
+          <span class="sponsor-status status-${s.status||'active'}">${sl}</span>
+          <button class="btn-sm" onclick="editSponsor('${s.id}')">Edit</button>
+          <button class="btn-danger" onclick="deleteSponsor('${s.id}')">Delete</button>
         </div>
       </div>
-      <div class="sponsor-actions">
-        <span class="sponsor-status status-${s.status||'active'}">${s.status||'active'}</span>
-        <button class="btn-sm" onclick="editSponsor('${s.id}')">Edit</button>
-        <button class="btn-danger" onclick="deleteSponsor('${s.id}')">Delete</button>
-      </div>
-    </div>
-  `).join('')}</div>`;
+      ${locs.length ? `<div class="sponsor-locations">
+        <div class="sponsor-locations-label">Locations</div>
+        ${locs.map(l=>`<span class="location-pill">📍 ${esc(l)}</span>`).join('')}
+      </div>` : ''}
+    </div>`;
+  }).join('')}</div>`;
 };
 
-window.openSponsorModal = (id) => {
+window.openSponsorModal = () => {
   editingSponsorId = null;
   document.getElementById('sponsor-modal-title').textContent = 'Add Sponsor';
-  ['s-name','s-contact','s-email','s-phone','s-address','s-notes'].forEach(id => document.getElementById(id).value = '');
+  ['s-name','s-contact','s-email','s-phone','s-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('s-status').value = 'active';
+  document.getElementById('locations-list').innerHTML = '';
   document.getElementById('sponsor-modal').classList.add('open');
 };
 
@@ -871,29 +486,40 @@ window.editSponsor = (id) => {
   if (!s) return;
   editingSponsorId = id;
   document.getElementById('sponsor-modal-title').textContent = 'Edit Sponsor';
-  document.getElementById('s-name').value = s.name || '';
+  document.getElementById('s-name').value    = s.name    || '';
   document.getElementById('s-contact').value = s.contact || '';
-  document.getElementById('s-email').value = s.email || '';
-  document.getElementById('s-phone').value = s.phone || '';
-  document.getElementById('s-address').value = s.address || '';
-  document.getElementById('s-notes').value = s.notes || '';
-  document.getElementById('s-status').value = s.status || 'active';
+  document.getElementById('s-email').value   = s.email   || '';
+  document.getElementById('s-phone').value   = s.phone   || '';
+  document.getElementById('s-notes').value   = s.notes   || '';
+  document.getElementById('s-status').value  = s.status  || 'active';
+  document.getElementById('locations-list').innerHTML = '';
+  (s.locations || []).forEach(l => addLocationRow(l));
   document.getElementById('sponsor-modal').classList.add('open');
 };
 
 window.closeSponsorModal = () => document.getElementById('sponsor-modal').classList.remove('open');
 
+window.addLocationRow = (value = '') => {
+  const row = document.createElement('div');
+  row.className = 'location-row';
+  row.innerHTML = `<input type="text" class="loc-input" placeholder="123 Main St, Riverside, CA" value="${esc(value)}">
+    <button class="loc-remove-btn" onclick="this.parentElement.remove()">×</button>`;
+  document.getElementById('locations-list').appendChild(row);
+};
+
 window.saveSponsor = async () => {
   const name = document.getElementById('s-name').value.trim();
   if (!name) { showToast('Business name is required', 'error'); return; }
+  const locations = Array.from(document.querySelectorAll('#locations-list .loc-input'))
+    .map(i => i.value.trim()).filter(Boolean);
   const data = {
     name,
-    contact: document.getElementById('s-contact').value.trim(),
-    email: document.getElementById('s-email').value.trim(),
-    phone: document.getElementById('s-phone').value.trim(),
-    address: document.getElementById('s-address').value.trim(),
-    notes: document.getElementById('s-notes').value.trim(),
-    status: document.getElementById('s-status').value,
+    contact:   document.getElementById('s-contact').value.trim(),
+    email:     document.getElementById('s-email').value.trim(),
+    phone:     document.getElementById('s-phone').value.trim(),
+    notes:     document.getElementById('s-notes').value.trim(),
+    status:    document.getElementById('s-status').value,
+    locations,
     updatedAt: Timestamp.now()
   };
   try {
@@ -922,10 +548,10 @@ window.deleteSponsor = async (id) => {
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 };
 
-// ─── DROP-INS ────────────────────────────────────────────────────────────────
+// DROP-INS
 window.renderDropins = () => {
   const filterSponsor = document.getElementById('dropin-sponsor-filter').value;
-  let filtered = filterSponsor ? dropins.filter(d => d.sponsorId === filterSponsor) : dropins;
+  const filtered = filterSponsor ? dropins.filter(d => d.sponsorId === filterSponsor) : dropins;
   const el = document.getElementById('dropin-list');
   if (!filtered.length) {
     el.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins logged yet.</p></div>`;
@@ -933,25 +559,25 @@ window.renderDropins = () => {
   }
   el.innerHTML = filtered.map(d => {
     const sponsor = sponsors.find(s => s.id === d.sponsorId);
-    const loc = sponsor ? sponsor.name : (d.sponsorName || 'Unknown');
-    const date = d.date ? new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '';
+    const sName   = sponsor ? sponsor.name : (d.sponsorName || 'Unknown');
+    const date    = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
     return `<div class="dropin-card">
       <div class="dropin-header">
         <div>
-          <div class="dropin-location">${esc(loc)}</div>
+          <div class="dropin-location">${esc(sName)}</div>
+          ${d.locationAddress ? `<div class="dropin-sublocation">📍 ${esc(d.locationAddress)}</div>` : ''}
           <div class="dropin-date">${date}</div>
         </div>
         <button class="btn-danger" onclick="deleteDropin('${d.id}')">Delete</button>
       </div>
       <div class="dropin-stats">
-        <div class="stat-item"><span class="stat-val neutral">${d.booksBefore ?? '—'}</span><span class="stat-label">Arrived</span></div>
-        <div class="stat-item"><span class="stat-val added">+${d.booksAdded ?? 0}</span><span class="stat-label">Added</span></div>
-        <div class="stat-item"><span class="stat-val removed">-${d.booksRemoved ?? 0}</span><span class="stat-label">Removed</span></div>
-        <div class="stat-item"><span class="stat-val neutral">${d.booksAfter ?? '—'}</span><span class="stat-label">Left with</span></div>
+        <div class="stat-item"><span class="stat-val neutral">${d.booksBefore??'—'}</span><span class="stat-label">Arrived</span></div>
+        <div class="stat-item"><span class="stat-val added">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
+        <div class="stat-item"><span class="stat-val removed">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
+        <div class="stat-item"><span class="stat-val neutral">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
         ${d.booksRemoved > 0 ? `
-        <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.redistributed ?? 0}</span><span class="stat-label">Redistributed</span></div>
-        <div class="stat-item"><span class="stat-val" style="color:var(--muted)">${d.discarded ?? 0}</span><span class="stat-label">Discarded</span></div>
-        ` : ''}
+        <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.redistributed??0}</span><span class="stat-label">Redistributed</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:var(--muted)">${d.discarded??0}</span><span class="stat-label">Discarded</span></div>` : ''}
       </div>
       ${d.notes ? `<div class="dropin-notes">${esc(d.notes)}</div>` : ''}
     </div>`;
@@ -961,6 +587,8 @@ window.renderDropins = () => {
 window.openDropinModal = () => {
   document.getElementById('d-date').value = new Date().toISOString().split('T')[0];
   document.getElementById('d-sponsor').value = '';
+  document.getElementById('d-location-step').style.display = 'none';
+  document.getElementById('d-location').innerHTML = '<option value="">Select a location...</option>';
   ['d-before','d-added','d-removed','d-redistributed','d-discarded'].forEach(id => document.getElementById(id).value = '0');
   document.getElementById('d-notes').value = '';
   document.getElementById('redist-section').style.display = 'none';
@@ -968,92 +596,95 @@ window.openDropinModal = () => {
   updateDropinCalc();
   document.getElementById('dropin-modal').classList.add('open');
 };
-
 window.closeDropinModal = () => document.getElementById('dropin-modal').classList.remove('open');
 
+window.onSponsorChange = () => {
+  const sponsorId   = document.getElementById('d-sponsor').value;
+  const locationStep = document.getElementById('d-location-step');
+  const locationSel  = document.getElementById('d-location');
+  if (!sponsorId) { locationStep.style.display = 'none'; return; }
+  const sponsor = sponsors.find(s => s.id === sponsorId);
+  const locs    = (sponsor && sponsor.locations) ? sponsor.locations.filter(Boolean) : [];
+  if (!locs.length) { locationStep.style.display = 'none'; return; }
+  locationSel.innerHTML = '<option value="">Select a location...</option>' +
+    locs.map(l => `<option value="${esc(l)}">${esc(sponsor.name)} — ${esc(l)}</option>`).join('');
+  locationStep.style.display = 'block';
+};
+
 window.updateDropinCalc = () => {
-  const before = parseInt(document.getElementById('d-before').value) || 0;
-  const added = parseInt(document.getElementById('d-added').value) || 0;
+  const before  = parseInt(document.getElementById('d-before').value)  || 0;
+  const added   = parseInt(document.getElementById('d-added').value)   || 0;
   const removed = parseInt(document.getElementById('d-removed').value) || 0;
-  const after = before + added - removed;
-
-  document.getElementById('inv-before').textContent = before;
-  document.getElementById('inv-added').textContent = '+' + added;
+  document.getElementById('inv-before').textContent  = before;
+  document.getElementById('inv-added').textContent   = '+' + added;
   document.getElementById('inv-removed').textContent = '-' + removed;
-  document.getElementById('inv-after').textContent = after;
-
-  // Show/hide redistribution section
+  document.getElementById('inv-after').textContent   = before + added - removed;
   const redistSection = document.getElementById('redist-section');
   if (removed > 0) {
     redistSection.style.display = 'block';
-    // Default: all redistributed
-    const currentRedist = parseInt(document.getElementById('d-redistributed').value) || 0;
-    const currentDiscard = parseInt(document.getElementById('d-discarded').value) || 0;
-    if (currentRedist + currentDiscard === 0 || currentRedist + currentDiscard !== removed) {
+    const cr = parseInt(document.getElementById('d-redistributed').value) || 0;
+    const cd = parseInt(document.getElementById('d-discarded').value)     || 0;
+    if (cr + cd !== removed) {
       document.getElementById('d-redistributed').value = removed;
-      document.getElementById('d-discarded').value = 0;
+      document.getElementById('d-discarded').value     = 0;
     }
     validateRedist(removed);
   } else {
     redistSection.style.display = 'none';
     document.getElementById('d-redistributed').value = 0;
-    document.getElementById('d-discarded').value = 0;
+    document.getElementById('d-discarded').value     = 0;
   }
 };
 
 function validateRedist(removed) {
-  const redist = parseInt(document.getElementById('d-redistributed').value) || 0;
-  const discard = parseInt(document.getElementById('d-discarded').value) || 0;
-  const err = document.getElementById('redist-error');
-  if (redist + discard !== removed) {
-    err.style.display = 'block';
-  } else {
-    err.style.display = 'none';
-  }
+  const r = parseInt(document.getElementById('d-redistributed').value) || 0;
+  const d = parseInt(document.getElementById('d-discarded').value)     || 0;
+  document.getElementById('redist-error').style.display = (r + d !== removed) ? 'block' : 'none';
 }
-
-// Also attach listeners for redist inputs
 document.getElementById('d-redistributed').addEventListener('input', () => {
-  const removed = parseInt(document.getElementById('d-removed').value) || 0;
-  if (removed > 0) validateRedist(removed);
+  const rem = parseInt(document.getElementById('d-removed').value) || 0;
+  if (rem > 0) validateRedist(rem);
 });
 document.getElementById('d-discarded').addEventListener('input', () => {
-  const removed = parseInt(document.getElementById('d-removed').value) || 0;
-  if (removed > 0) validateRedist(removed);
+  const rem = parseInt(document.getElementById('d-removed').value) || 0;
+  if (rem > 0) validateRedist(rem);
 });
 
 window.saveDropin = async () => {
   const sponsorId = document.getElementById('d-sponsor').value;
-  const date = document.getElementById('d-date').value;
+  const date      = document.getElementById('d-date').value;
   if (!sponsorId) { showToast('Select a sponsor', 'error'); return; }
-  if (!date) { showToast('Select a date', 'error'); return; }
-
-  const before = parseInt(document.getElementById('d-before').value) || 0;
-  const added = parseInt(document.getElementById('d-added').value) || 0;
-  const removed = parseInt(document.getElementById('d-removed').value) || 0;
-  const redistributed = parseInt(document.getElementById('d-redistributed').value) || 0;
-  const discarded = parseInt(document.getElementById('d-discarded').value) || 0;
-
-  if (removed > 0 && redistributed + discarded !== removed) {
-    showToast('Redistributed + Discarded must equal books removed', 'error');
-    return;
-  }
+  if (!date)      { showToast('Select a date', 'error'); return; }
 
   const sponsor = sponsors.find(s => s.id === sponsorId);
+  const locs    = (sponsor && sponsor.locations) ? sponsor.locations.filter(Boolean) : [];
+  const locationAddress = locs.length ? document.getElementById('d-location').value : '';
+  if (locs.length && !locationAddress) { showToast('Select a location', 'error'); return; }
+
+  const before        = parseInt(document.getElementById('d-before').value)        || 0;
+  const added         = parseInt(document.getElementById('d-added').value)         || 0;
+  const removed       = parseInt(document.getElementById('d-removed').value)       || 0;
+  const redistributed = parseInt(document.getElementById('d-redistributed').value) || 0;
+  const discarded     = parseInt(document.getElementById('d-discarded').value)     || 0;
+
+  if (removed > 0 && redistributed + discarded !== removed) {
+    showToast('Redistributed + Discarded must equal books removed', 'error'); return;
+  }
+
   const data = {
     sponsorId,
     sponsorName: sponsor ? sponsor.name : '',
+    locationAddress,
     date,
-    booksBefore: before,
-    booksAdded: added,
+    booksBefore:  before,
+    booksAdded:   added,
     booksRemoved: removed,
-    booksAfter: before + added - removed,
+    booksAfter:   before + added - removed,
     redistributed,
     discarded,
-    notes: document.getElementById('d-notes').value.trim(),
+    notes:     document.getElementById('d-notes').value.trim(),
     createdAt: Timestamp.now()
   };
-
   try {
     await addDoc(collection(db, DROPINS_COL), data);
     closeDropinModal();
@@ -1075,94 +706,82 @@ window.deleteDropin = async (id) => {
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 };
 
-// ─── DASHBOARD ───────────────────────────────────────────────────────────────
+// DASHBOARD
 window.setPeriod = (period, btn) => {
   currentPeriod = period;
   document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderDashboard();
 };
-
-function getPeriodStart(period) {
+function getPeriodStart(p) {
   const now = new Date();
-  if (period === 'all') return new Date(0);
-  if (period === 'week') { const d = new Date(now); d.setDate(d.getDate() - 7); return d; }
-  if (period === 'month') { return new Date(now.getFullYear(), now.getMonth(), 1); }
-  if (period === 'quarter') { const q = Math.floor(now.getMonth()/3); return new Date(now.getFullYear(), q*3, 1); }
-  if (period === 'year') { return new Date(now.getFullYear(), 0, 1); }
+  if (p==='all')     return new Date(0);
+  if (p==='week')    { const d=new Date(now); d.setDate(d.getDate()-7); return d; }
+  if (p==='month')   return new Date(now.getFullYear(), now.getMonth(), 1);
+  if (p==='quarter') { const q=Math.floor(now.getMonth()/3); return new Date(now.getFullYear(),q*3,1); }
+  if (p==='year')    return new Date(now.getFullYear(), 0, 1);
   return new Date(0);
 }
-
 function renderDashboard() {
-  const start = getPeriodStart(currentPeriod);
-  const filtered = dropins.filter(d => {
-    if (!d.date) return false;
-    return new Date(d.date + 'T00:00:00') >= start;
-  });
-  const placed = filtered.reduce((sum, d) => sum + (d.booksAdded || 0), 0);
-  const redistributed = filtered.reduce((sum, d) => sum + (d.redistributed || 0), 0);
-  const discarded = filtered.reduce((sum, d) => sum + (d.discarded || 0), 0);
-  document.getElementById('stat-placed').textContent = placed;
-  document.getElementById('stat-redistributed').textContent = redistributed;
-  document.getElementById('stat-discarded').textContent = discarded;
-  document.getElementById('stat-visits').textContent = filtered.length;
+  const start    = getPeriodStart(currentPeriod);
+  const filtered = dropins.filter(d => d.date && new Date(d.date+'T00:00:00') >= start);
+  document.getElementById('stat-placed').textContent        = filtered.reduce((s,d)=>s+(d.booksAdded||0),0);
+  document.getElementById('stat-redistributed').textContent = filtered.reduce((s,d)=>s+(d.redistributed||0),0);
+  document.getElementById('stat-discarded').textContent     = filtered.reduce((s,d)=>s+(d.discarded||0),0);
+  document.getElementById('stat-visits').textContent        = filtered.length;
 
-  // Recent 5
-  const recent = dropins.slice(0, 5);
+  const recent = dropins.slice(0,5);
   const el = document.getElementById('recent-dropins-list');
-  if (!recent.length) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins yet.</p></div>`;
-    return;
-  }
+  if (!recent.length) { el.innerHTML=`<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins yet.</p></div>`; return; }
   el.innerHTML = recent.map(d => {
     const sponsor = sponsors.find(s => s.id === d.sponsorId);
-    const loc = sponsor ? sponsor.name : (d.sponsorName || 'Unknown');
-    const date = d.date ? new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric' }) : '';
+    const sName   = sponsor ? sponsor.name : (d.sponsorName||'Unknown');
+    const date    = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
     return `<div class="dropin-card" style="margin-bottom:0.5rem">
       <div class="dropin-header" style="margin-bottom:0.5rem">
-        <div><div class="dropin-location">${esc(loc)}</div><div class="dropin-date">${date}</div></div>
+        <div>
+          <div class="dropin-location">${esc(sName)}</div>
+          ${d.locationAddress ? `<div class="dropin-sublocation">📍 ${esc(d.locationAddress)}</div>` : ''}
+          <div class="dropin-date">${date}</div>
+        </div>
       </div>
       <div class="dropin-stats">
-        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksBefore ?? '—'}</span><span class="stat-label">Arrived</span></div>
-        <div class="stat-item"><span class="stat-val added" style="font-size:1.1rem">+${d.booksAdded ?? 0}</span><span class="stat-label">Added</span></div>
-        <div class="stat-item"><span class="stat-val removed" style="font-size:1.1rem">-${d.booksRemoved ?? 0}</span><span class="stat-label">Removed</span></div>
-        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksAfter ?? '—'}</span><span class="stat-label">Left with</span></div>
+        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksBefore??'—'}</span><span class="stat-label">Arrived</span></div>
+        <div class="stat-item"><span class="stat-val added"   style="font-size:1.1rem">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
+        <div class="stat-item"><span class="stat-val removed" style="font-size:1.1rem">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
+        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
+// HELPERS
 function populateSponsorSelects() {
-  const activeSponsors = sponsors.filter(s => s.status !== 'inactive');
-  const opts = activeSponsors.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('');
-  document.getElementById('d-sponsor').innerHTML = '<option value="">Select a sponsor...</option>' + opts;
-  
-  const allOpts = sponsors.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('');
-  document.getElementById('dropin-sponsor-filter').innerHTML = '<option value="">All Sponsors</option>' + allOpts;
+  const active = sponsors.filter(s => s.status === 'active');
+  document.getElementById('d-sponsor').innerHTML =
+    '<option value="">Select a sponsor...</option>' +
+    active.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+  document.getElementById('dropin-sponsor-filter').innerHTML =
+    '<option value="">All Sponsors</option>' +
+    sponsors.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
 }
 
 function esc(str) {
   if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 let toastTimer;
-window.showToast = (msg, type = 'success') => {
+window.showToast = (msg, type='success') => {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'show ' + type;
+  t.className   = 'show ' + type;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.className = '', 3000);
+  toastTimer = setTimeout(() => t.className='', 3000);
 };
 
-// Close modals on overlay click
-document.getElementById('sponsor-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeSponsorModal();
-});
-document.getElementById('dropin-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeDropinModal();
-});
+document.getElementById('sponsor-modal').addEventListener('click', e => { if (e.target===e.currentTarget) closeSponsorModal(); });
+document.getElementById('dropin-modal').addEventListener('click',  e => { if (e.target===e.currentTarget) closeDropinModal();  });
 </script>
 </body>
 </html>
