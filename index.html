@@ -193,6 +193,7 @@
       </div>
       <div class="stats-grid">
         <div class="stat-card"><div class="big-num sage" id="stat-placed">—</div><div class="stat-desc">Books Placed</div></div>
+        <div class="stat-card"><div class="big-num warm" id="stat-circulated">—</div><div class="stat-desc">Circulated</div></div>
         <div class="stat-card"><div class="big-num accent" id="stat-redistributed">—</div><div class="stat-desc">Redistributed</div></div>
         <div class="stat-card"><div class="big-num warm" id="stat-discarded">—</div><div class="stat-desc">Discarded</div></div>
         <div class="stat-card"><div class="big-num" id="stat-visits">—</div><div class="stat-desc">Drop-in Visits</div></div>
@@ -342,6 +343,8 @@
       <div class="inv-item"><span class="inv-val" style="color:var(--sage)" id="inv-added">+0</span><span class="inv-lbl">Added</span></div>
       <div class="inv-item"><span class="inv-val" style="color:var(--accent)" id="inv-removed">-0</span><span class="inv-lbl">Removed</span></div>
       <div class="inv-item"><span class="inv-val" id="inv-after">0</span><span class="inv-lbl">Left with</span></div>
+      <div class="inv-item"><span class="inv-val" id="inv-net" style="color:var(--sage)">+0</span><span class="inv-lbl">Net to shelf</span></div>
+      <div class="inv-item"><span class="inv-val" style="color:var(--warm)" id="inv-circ">0</span><span class="inv-lbl">Circulated</span></div>
     </div>
     <div class="form-group">
       <label class="form-label">Notes</label>
@@ -575,6 +578,8 @@ window.renderDropins = () => {
         <div class="stat-item"><span class="stat-val added">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
         <div class="stat-item"><span class="stat-val removed">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
         <div class="stat-item"><span class="stat-val neutral">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:${(d.netToShelf??0)>=0?'var(--sage)':'var(--accent)'}">${(d.netToShelf??0)>=0?'+':''}${d.netToShelf??0}</span><span class="stat-label">Net to shelf</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.circulated??d.booksAdded??0}</span><span class="stat-label">Circulated</span></div>
         ${d.booksRemoved > 0 ? `
         <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.redistributed??0}</span><span class="stat-label">Redistributed</span></div>
         <div class="stat-item"><span class="stat-val" style="color:var(--muted)">${d.discarded??0}</span><span class="stat-label">Discarded</span></div>` : ''}
@@ -585,6 +590,7 @@ window.renderDropins = () => {
 };
 
 window.openDropinModal = () => {
+  lastRemovedVal = 0;
   document.getElementById('d-date').value = new Date().toISOString().split('T')[0];
   document.getElementById('d-sponsor').value = '';
   document.getElementById('d-location-step').style.display = 'none';
@@ -611,28 +617,39 @@ window.onSponsorChange = () => {
   locationStep.style.display = 'block';
 };
 
+let lastRemovedVal = 0;
 window.updateDropinCalc = () => {
   const before  = parseInt(document.getElementById('d-before').value)  || 0;
   const added   = parseInt(document.getElementById('d-added').value)   || 0;
   const removed = parseInt(document.getElementById('d-removed').value) || 0;
+  const after   = before + added - removed;
+  const net     = after - before;
+  const redist  = parseInt(document.getElementById('d-redistributed').value) || 0;
+  const circ    = added + redist;
+
   document.getElementById('inv-before').textContent  = before;
   document.getElementById('inv-added').textContent   = '+' + added;
   document.getElementById('inv-removed').textContent = '-' + removed;
-  document.getElementById('inv-after').textContent   = before + added - removed;
+  document.getElementById('inv-after').textContent   = after;
+  document.getElementById('inv-net').textContent     = (net >= 0 ? '+' : '') + net;
+  document.getElementById('inv-net').style.color     = net >= 0 ? 'var(--sage)' : 'var(--accent)';
+  document.getElementById('inv-circ').textContent    = circ;
+
   const redistSection = document.getElementById('redist-section');
   if (removed > 0) {
     redistSection.style.display = 'block';
-    const cr = parseInt(document.getElementById('d-redistributed').value) || 0;
-    const cd = parseInt(document.getElementById('d-discarded').value)     || 0;
-    if (cr + cd !== removed) {
+    // Only reset defaults when the removed value itself changes, not on redist/discarded edits
+    if (removed !== lastRemovedVal) {
       document.getElementById('d-redistributed').value = removed;
       document.getElementById('d-discarded').value     = 0;
+      lastRemovedVal = removed;
     }
     validateRedist(removed);
   } else {
     redistSection.style.display = 'none';
     document.getElementById('d-redistributed').value = 0;
     document.getElementById('d-discarded').value     = 0;
+    lastRemovedVal = 0;
   }
 };
 
@@ -642,7 +659,10 @@ function validateRedist(removed) {
   document.getElementById('redist-error').style.display = (r + d !== removed) ? 'block' : 'none';
 }
 document.getElementById('d-redistributed').addEventListener('input', () => {
-  const rem = parseInt(document.getElementById('d-removed').value) || 0;
+  const rem   = parseInt(document.getElementById('d-removed').value) || 0;
+  const added = parseInt(document.getElementById('d-added').value)   || 0;
+  const redist = parseInt(document.getElementById('d-redistributed').value) || 0;
+  document.getElementById('inv-circ').textContent = added + redist;
   if (rem > 0) validateRedist(rem);
 });
 document.getElementById('d-discarded').addEventListener('input', () => {
@@ -680,8 +700,10 @@ window.saveDropin = async () => {
     booksAdded:   added,
     booksRemoved: removed,
     booksAfter:   before + added - removed,
+    netToShelf:   (before + added - removed) - before,
     redistributed,
     discarded,
+    circulated:   added + redistributed,
     notes:     document.getElementById('d-notes').value.trim(),
     createdAt: Timestamp.now()
   };
@@ -726,6 +748,7 @@ function renderDashboard() {
   const start    = getPeriodStart(currentPeriod);
   const filtered = dropins.filter(d => d.date && new Date(d.date+'T00:00:00') >= start);
   document.getElementById('stat-placed').textContent        = filtered.reduce((s,d)=>s+(d.booksAdded||0),0);
+  document.getElementById('stat-circulated').textContent    = filtered.reduce((s,d)=>s+(d.circulated!==undefined?d.circulated:(d.booksAdded||0)),0);
   document.getElementById('stat-redistributed').textContent = filtered.reduce((s,d)=>s+(d.redistributed||0),0);
   document.getElementById('stat-discarded').textContent     = filtered.reduce((s,d)=>s+(d.discarded||0),0);
   document.getElementById('stat-visits').textContent        = filtered.length;
