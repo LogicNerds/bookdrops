@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Neighbor</title>
+<title>The Library Branch — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,21 +21,23 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
 
+  /* AUTH */
   #auth-screen {
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
     background: var(--ink);
     background-image: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(200,169,110,0.04) 40px,rgba(200,169,110,0.04) 41px);
   }
   .auth-card { background: var(--card); border: 1px solid var(--border); padding: 3rem 2.5rem; text-align: center; max-width: 380px; width: 90%; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
-  .auth-card h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.5rem; }
-  .auth-card p { font-size: 0.85rem; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; margin-bottom: 2rem; }
+  .auth-card h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.25rem; }
+  .auth-card .auth-sub { font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; margin-bottom: 2rem; }
   .google-btn { display: flex; align-items: center; justify-content: center; gap: 0.75rem; background: var(--ink); color: var(--paper); border: none; padding: 0.9rem 1.5rem; width: 100%; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
   .google-btn:hover { background: var(--accent); }
   .google-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 
+  /* APP SHELL */
   #app { display: none; min-height: 100vh; }
   header { background: var(--ink); color: var(--paper); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .header-brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+  .header-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; }
   .header-brand span { color: var(--warm); }
   .header-right { display: flex; align-items: center; gap: 1rem; }
   .user-info { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
@@ -43,9 +45,10 @@
   .signout-btn:hover { border-color: var(--warm); color: var(--warm); }
 
   nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; padding: 0 2rem; overflow-x: auto; }
-  .nav-tab { padding: 0.85rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .nav-tab { padding: 0.85rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; position: relative; }
   .nav-tab:hover { color: var(--ink); }
   .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-badge { position: absolute; top: 8px; right: 6px; background: var(--accent); color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 10px; font-family: 'DM Mono', monospace; }
 
   main { padding: 2rem; max-width: 1100px; margin: 0 auto; }
   .page { display: none; }
@@ -53,6 +56,7 @@
   .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
 
+  /* BUTTONS */
   .btn-primary { background: var(--accent); color: white; border: none; padding: 0.65rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
   .btn-primary:hover { opacity: 0.85; }
   .btn-secondary { background: none; color: var(--ink); border: 1px solid var(--border); padding: 0.65rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; cursor: pointer; transition: border-color 0.2s; }
@@ -64,22 +68,49 @@
   .btn-add-loc { background: none; color: var(--sage); border: 1px dashed rgba(90,122,90,0.5); padding: 0.45rem 0.9rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 0.5rem; }
   .btn-add-loc:hover { border-color: var(--sage); background: rgba(90,122,90,0.06); }
 
-  .sponsor-grid { display: grid; gap: 1rem; }
-  .sponsor-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; box-shadow: 0 1px 4px var(--shadow); transition: border-color 0.2s; }
-  .sponsor-card:hover { border-color: var(--warm); }
-  .sponsor-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-  .sponsor-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .sponsor-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); line-height: 1.7; }
-  .sponsor-status { display: inline-block; padding: 0.2rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; box-shadow: 0 1px 4px var(--shadow); transition: border-color 0.2s; margin-bottom: 0.75rem; }
+  .card:hover { border-color: var(--warm); }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .card-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .card-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); line-height: 1.7; }
+  .card-actions { display: flex; gap: 0.5rem; align-items: flex-start; flex-shrink: 0; flex-wrap: wrap; }
+
+  /* STATUS BADGES */
+  .status-badge { display: inline-block; padding: 0.2rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
   .status-active   { background: rgba(90,122,90,0.15);  color: var(--sage);   border: 1px solid rgba(90,122,90,0.3); }
   .status-inactive { background: rgba(138,127,110,0.12); color: var(--muted);  border: 1px solid var(--border); }
   .status-pending  { background: rgba(200,169,110,0.15); color: #7a6030;       border: 1px solid rgba(200,169,110,0.4); }
-  .sponsor-actions { display: flex; gap: 0.5rem; align-items: flex-start; flex-shrink: 0; }
+  .status-new      { background: rgba(139,58,42,0.1);    color: var(--accent); border: 1px solid rgba(139,58,42,0.3); }
+  .status-fulfilled{ background: rgba(90,122,90,0.15);   color: var(--sage);   border: 1px solid rgba(90,122,90,0.3); }
 
-  .sponsor-locations { margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
-  .sponsor-locations-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
+  /* SITE TOGGLE */
+  .site-toggle { display: flex; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .toggle-switch { width: 32px; height: 18px; background: var(--border); border-radius: 9px; position: relative; transition: background 0.2s; flex-shrink: 0; }
+  .toggle-switch.on { background: var(--sage); }
+  .toggle-switch::after { content: ''; position: absolute; width: 12px; height: 12px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: left 0.2s; }
+  .toggle-switch.on::after { left: 17px; }
+
+  /* LOCATIONS */
+  .locations-footer { margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .locations-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
   .location-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--cream); border: 1px solid var(--border); padding: 0.25rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; margin: 0.2rem 0.2rem 0.2rem 0; }
 
+  /* DASHBOARD */
+  .stats-controls { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .period-btn { background: none; border: 1px solid var(--border); padding: 0.45rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; color: var(--muted); transition: all 0.2s; }
+  .period-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .period-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; box-shadow: 0 1px 4px var(--shadow); }
+  .stat-card .big-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
+  .stat-card .big-num.sage { color: var(--sage); }
+  .stat-card .big-num.accent { color: var(--accent); }
+  .stat-card .big-num.warm { color: var(--warm); }
+  .stat-card .stat-desc { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .recent-activity h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 1rem; }
+
+  /* DROP-INS */
   .dropin-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--warm); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 4px var(--shadow); }
   .dropin-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
   .dropin-location { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
@@ -93,25 +124,49 @@
   .stat-val.neutral { color: var(--ink); }
   .stat-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
   .dropin-notes { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+  .inventory-summary { background: var(--cream); border: 1px solid var(--border); padding: 1rem 1.25rem; margin: 1rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .inv-item { text-align: center; }
+  .inv-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; display: block; }
+  .inv-lbl { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
 
-  .stats-controls { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .period-btn { background: none; border: 1px solid var(--border); padding: 0.45rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; color: var(--muted); transition: all 0.2s; }
-  .period-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .period-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; text-align: center; box-shadow: 0 1px 4px var(--shadow); }
-  .stat-card .big-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
-  .stat-card .big-num.sage { color: var(--sage); }
-  .stat-card .big-num.accent { color: var(--accent); }
-  .stat-card .big-num.warm { color: var(--warm); }
-  .stat-card .stat-desc { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-  .recent-activity h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 1rem; }
+  /* INVENTORY */
+  .book-grid { display: grid; gap: 0.75rem; }
+  .book-card { background: var(--card); border: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 1px 4px var(--shadow); flex-wrap: wrap; }
+  .book-info { flex: 1; min-width: 200px; }
+  .book-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .book-author { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+  .book-genre { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--warm); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.1rem; }
+  .book-qty { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--sage); text-align: center; min-width: 50px; }
+  .book-qty-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; text-align: center; }
+  .book-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
 
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,18,8,0.6); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--card); border: 1px solid var(--border); padding: 2rem; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 60px rgba(0,0,0,0.35); }
-  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; }
+  /* ORDERS */
+  .order-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 4px var(--shadow); }
+  .order-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .order-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .order-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); line-height: 1.7; margin-top: 0.2rem; }
+  .order-books { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .order-books-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
+  .order-book-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.3rem 0; border-bottom: 1px solid var(--border); }
+  .order-book-row:last-child { border-bottom: none; }
+  .order-actions { margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
+  /* EVENTS */
+  .event-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--sage); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 4px var(--shadow); }
+  .event-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+  .event-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+  .event-date { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--warm); margin-top: 0.2rem; }
+  .event-location { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+  .event-desc { font-size: 0.85rem; color: var(--muted); margin-top: 0.6rem; line-height: 1.6; }
+  .event-actions { display: flex; gap: 0.5rem; align-items: flex-start; flex-shrink: 0; flex-wrap: wrap; }
+
+  /* LFL STEWARDS */
+  .steward-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 4px var(--shadow); }
+  .steward-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+  .steward-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+  .steward-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); line-height: 1.7; margin-top: 0.2rem; }
+
+  /* FORMS */
   .form-group { margin-bottom: 1.1rem; }
   .form-label { display: block; font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.4rem; }
   .form-input, .form-select, .form-textarea { width: 100%; padding: 0.65rem 0.85rem; background: var(--paper); border: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none; transition: border-color 0.2s; }
@@ -119,7 +174,8 @@
   .form-textarea { resize: vertical; min-height: 80px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
-
+  .form-check { display: flex; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); cursor: pointer; }
+  .form-check input { width: 16px; height: 16px; accent-color: var(--sage); cursor: pointer; }
   .locations-section { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
   .locations-section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.75rem; }
   .location-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
@@ -127,14 +183,21 @@
   .location-row input:focus { border-color: var(--warm); }
   .loc-remove-btn { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; padding: 0.2rem 0.4rem; line-height: 1; flex-shrink: 0; }
   .loc-remove-btn:hover { color: var(--accent); }
-
   .step-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--warm); margin-bottom: 0.35rem; }
-  .inventory-summary { background: var(--cream); border: 1px solid var(--border); padding: 1rem 1.25rem; margin: 1rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .inv-item { text-align: center; }
-  .inv-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; display: block; }
-  .inv-lbl { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
   .redist-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
 
+  /* MODALS */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,18,8,0.6); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--card); border: 1px solid var(--border); padding: 2rem; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 60px rgba(0,0,0,0.35); }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; }
+
+  /* MISC */
+  .filter-row { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+  .filter-row input, .filter-row select { padding: 0.5rem 0.85rem; border: 1px solid var(--border); background: var(--card); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; }
+  .filter-row input { flex: 1; min-width: 180px; }
+  .filter-row input:focus, .filter-row select:focus { border-color: var(--warm); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
   .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
   .empty-state p { font-family: 'DM Mono', monospace; font-size: 0.82rem; letter-spacing: 0.03em; }
@@ -143,18 +206,24 @@
   #toast.show { transform: translateY(0); }
   #toast.success { border-left: 3px solid var(--sage); }
   #toast.error { border-left: 3px solid var(--accent); }
-  .filter-row { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
-  .filter-row input { padding: 0.5rem 0.85rem; border: 1px solid var(--border); background: var(--card); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; flex: 1; min-width: 180px; }
-  .filter-row input:focus { border-color: var(--warm); }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+  .section-divider { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    main { padding: 1rem; }
+    header { padding: 0 1rem; }
+    nav { padding: 0 1rem; }
+    .modal { padding: 1.5rem; }
+  }
 </style>
 </head>
 <body>
 
+<!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-card">
-    <h1>Book a<br><span style="color:var(--accent)">Neighbor</span></h1>
-    <p>inventory &amp; sponsor tracker</p>
+    <h1>The Library<br><span style="color:var(--accent)">Branch</span></h1>
+    <p class="auth-sub">admin panel</p>
     <button class="google-btn" onclick="signInWithGoogle()">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -167,9 +236,10 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <header>
-    <div class="header-brand">Book a <span>Neighbor</span></div>
+    <div class="header-brand">The Library <span>Branch</span></div>
     <div class="header-right">
       <span class="user-info" id="user-email"></span>
       <button class="signout-btn" onclick="signOut()">Sign out</button>
@@ -177,10 +247,15 @@
   </header>
   <nav>
     <button class="nav-tab active" onclick="showPage('dashboard',this)">Dashboard</button>
-    <button class="nav-tab" onclick="showPage('sponsors',this)">Sponsors</button>
+    <button class="nav-tab" onclick="showPage('branches',this)">Branches</button>
+    <button class="nav-tab" onclick="showPage('inventory',this)">Inventory</button>
+    <button class="nav-tab" onclick="showPage('orders',this)" id="orders-tab">Orders<span class="nav-badge" id="orders-badge" style="display:none">0</span></button>
+    <button class="nav-tab" onclick="showPage('stewards',this)">LFL Stewards</button>
+    <button class="nav-tab" onclick="showPage('events',this)">Events</button>
     <button class="nav-tab" onclick="showPage('dropins',this)">Drop-ins</button>
   </nav>
   <main>
+
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="section-header"><div class="section-title">Overview</div></div>
@@ -192,34 +267,96 @@
         <button class="period-btn" onclick="setPeriod('all',this)">All time</button>
       </div>
       <div class="stats-grid">
-        <div class="stat-card"><div class="big-num sage" id="stat-placed">—</div><div class="stat-desc">Books Placed</div></div>
+        <div class="stat-card"><div class="big-num sage" id="stat-branches">—</div><div class="stat-desc">Active Branches</div></div>
+        <div class="stat-card"><div class="big-num warm" id="stat-inventory">—</div><div class="stat-desc">Books in Stock</div></div>
+        <div class="stat-card"><div class="big-num accent" id="stat-orders-new">—</div><div class="stat-desc">Pending Orders</div></div>
+        <div class="stat-card"><div class="big-num" id="stat-placed">—</div><div class="stat-desc">Books Placed</div></div>
         <div class="stat-card"><div class="big-num warm" id="stat-circulated">—</div><div class="stat-desc">Circulated</div></div>
-        <div class="stat-card"><div class="big-num accent" id="stat-redistributed">—</div><div class="stat-desc">Redistributed</div></div>
-        <div class="stat-card"><div class="big-num warm" id="stat-discarded">—</div><div class="stat-desc">Discarded</div></div>
         <div class="stat-card"><div class="big-num" id="stat-visits">—</div><div class="stat-desc">Drop-in Visits</div></div>
       </div>
       <div class="recent-activity">
+        <h3>Recent Orders</h3>
+        <div id="recent-orders-list"><div class="loading">Loading...</div></div>
+      </div>
+      <div class="recent-activity" style="margin-top:2rem">
         <h3>Recent Drop-ins</h3>
         <div id="recent-dropins-list"><div class="loading">Loading...</div></div>
       </div>
     </div>
 
-    <!-- SPONSORS -->
-    <div class="page" id="page-sponsors">
+    <!-- BRANCHES -->
+    <div class="page" id="page-branches">
       <div class="section-header">
-        <div class="section-title">Sponsors</div>
-        <button class="btn-primary" onclick="openSponsorModal()">+ Add Sponsor</button>
+        <div class="section-title">Branches</div>
+        <button class="btn-primary" onclick="openBranchModal()">+ Add Branch</button>
       </div>
       <div class="filter-row">
-        <input type="text" placeholder="Search sponsors..." id="sponsor-search" oninput="renderSponsors()">
-        <select class="form-select" id="sponsor-status-filter" onchange="renderSponsors()" style="width:auto;flex:unset;">
+        <input type="text" placeholder="Search branches..." id="branch-search" oninput="renderBranches()">
+        <select id="branch-status-filter" onchange="renderBranches()" style="width:auto;">
           <option value="">All</option>
           <option value="active">Active</option>
           <option value="pending">Pending Install</option>
           <option value="inactive">Inactive</option>
         </select>
       </div>
-      <div id="sponsor-list"><div class="loading">Loading...</div></div>
+      <div id="branch-list"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- INVENTORY -->
+    <div class="page" id="page-inventory">
+      <div class="section-header">
+        <div class="section-title">Inventory</div>
+        <button class="btn-primary" onclick="openBookModal()">+ Add Book</button>
+      </div>
+      <div class="filter-row">
+        <input type="text" placeholder="Search titles, authors..." id="book-search" oninput="renderInventory()">
+        <select id="book-genre-filter" onchange="renderInventory()" style="width:auto;">
+          <option value="">All Genres</option>
+          <option value="Children's">Children's</option>
+          <option value="Fiction">Fiction</option>
+          <option value="Non-Fiction">Non-Fiction</option>
+          <option value="Young Adult">Young Adult</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div id="book-list"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="page" id="page-orders">
+      <div class="section-header">
+        <div class="section-title">Book Orders</div>
+      </div>
+      <div class="filter-row">
+        <select id="order-status-filter" onchange="renderOrders()" style="width:auto;">
+          <option value="">All Orders</option>
+          <option value="new">New</option>
+          <option value="fulfilled">Fulfilled</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div id="order-list"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- LFL STEWARDS -->
+    <div class="page" id="page-stewards">
+      <div class="section-header">
+        <div class="section-title">LFL Stewards</div>
+        <button class="btn-primary" onclick="openStewardModal()">+ Add Steward</button>
+      </div>
+      <div class="filter-row">
+        <input type="text" placeholder="Search stewards..." id="steward-search" oninput="renderStewards()">
+      </div>
+      <div id="steward-list"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="page" id="page-events">
+      <div class="section-header">
+        <div class="section-title">Events</div>
+        <button class="btn-primary" onclick="openEventModal()">+ Add Event</button>
+      </div>
+      <div id="event-list"><div class="loading">Loading...</div></div>
     </div>
 
     <!-- DROP-INS -->
@@ -229,31 +366,34 @@
         <button class="btn-primary" onclick="openDropinModal()">+ Log Drop-in</button>
       </div>
       <div class="filter-row">
-        <select class="form-select" id="dropin-sponsor-filter" onchange="renderDropins()" style="flex:1">
-          <option value="">All Sponsors</option>
+        <select id="dropin-sponsor-filter" onchange="renderDropins()" style="flex:1">
+          <option value="">All Branches</option>
         </select>
       </div>
       <div id="dropin-list"><div class="loading">Loading...</div></div>
     </div>
+
   </main>
 </div>
 
-<!-- SPONSOR MODAL -->
-<div class="modal-overlay" id="sponsor-modal">
+<!-- ==================== MODALS ==================== -->
+
+<!-- BRANCH MODAL -->
+<div class="modal-overlay" id="branch-modal">
   <div class="modal">
-    <div class="modal-title" id="sponsor-modal-title">Add Sponsor</div>
+    <div class="modal-title" id="branch-modal-title">Add Branch</div>
     <div class="form-group">
       <label class="form-label">Business Name *</label>
-      <input class="form-input" id="s-name" placeholder="e.g. Riverside Reads">
+      <input class="form-input" id="b-name" placeholder="e.g. Monica's Discount Medical Supply">
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Contact Name</label>
-        <input class="form-input" id="s-contact" placeholder="Jane Smith">
+        <input class="form-input" id="b-contact" placeholder="Jane Smith">
       </div>
       <div class="form-group">
         <label class="form-label">Status</label>
-        <select class="form-select" id="s-status">
+        <select class="form-select" id="b-status">
           <option value="active">Active</option>
           <option value="pending">Pending Install</option>
           <option value="inactive">Inactive</option>
@@ -263,25 +403,148 @@
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Email</label>
-        <input class="form-input" id="s-email" type="email" placeholder="jane@example.com">
+        <input class="form-input" id="b-email" type="email">
       </div>
       <div class="form-group">
         <label class="form-label">Phone</label>
-        <input class="form-input" id="s-phone" placeholder="(555) 555-5555">
+        <input class="form-input" id="b-phone">
       </div>
     </div>
     <div class="form-group">
       <label class="form-label">Notes</label>
-      <textarea class="form-textarea" id="s-notes" placeholder="Any relevant notes..."></textarea>
+      <textarea class="form-textarea" id="b-notes" placeholder="Any relevant notes..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-check">
+        <input type="checkbox" id="b-show-on-site">
+        Show on public website
+      </label>
     </div>
     <div class="locations-section">
       <div class="locations-section-label">Locations</div>
-      <div id="locations-list"></div>
-      <button class="btn-add-loc" onclick="addLocationRow()">+ Add Location</button>
+      <div id="branch-locations-list"></div>
+      <button class="btn-add-loc" onclick="addBranchLocationRow()">+ Add Location</button>
     </div>
     <div class="form-actions">
-      <button class="btn-secondary" onclick="closeSponsorModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveSponsor()">Save Sponsor</button>
+      <button class="btn-secondary" onclick="closeBranchModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveBranch()">Save Branch</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOOK MODAL -->
+<div class="modal-overlay" id="book-modal">
+  <div class="modal">
+    <div class="modal-title" id="book-modal-title">Add Book</div>
+    <div class="form-group">
+      <label class="form-label">Title *</label>
+      <input class="form-input" id="bk-title" placeholder="Book title">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Author</label>
+      <input class="form-input" id="bk-author" placeholder="Author name">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Genre</label>
+        <select class="form-select" id="bk-genre">
+          <option value="Children's">Children's</option>
+          <option value="Fiction">Fiction</option>
+          <option value="Non-Fiction">Non-Fiction</option>
+          <option value="Young Adult">Young Adult</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Quantity *</label>
+        <input class="form-input" id="bk-qty" type="number" min="0" value="1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description / Notes</label>
+      <textarea class="form-textarea" id="bk-notes" placeholder="Condition, notes, etc."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-check">
+        <input type="checkbox" id="bk-show-on-site" checked>
+        Show on public website (available for LFL orders)
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn-secondary" onclick="closeBookModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveBook()">Save Book</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEWARD MODAL -->
+<div class="modal-overlay" id="steward-modal">
+  <div class="modal">
+    <div class="modal-title" id="steward-modal-title">Add LFL Steward</div>
+    <div class="form-group">
+      <label class="form-label">Name *</label>
+      <input class="form-input" id="st-name" placeholder="Steward name">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="st-email" type="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input class="form-input" id="st-phone">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">LFL Address</label>
+      <input class="form-input" id="st-address" placeholder="Address of their Little Free Library">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="st-notes"></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn-secondary" onclick="closeStewardModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveSteward()">Save Steward</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="modal-overlay" id="event-modal">
+  <div class="modal">
+    <div class="modal-title" id="event-modal-title">Add Event</div>
+    <div class="form-group">
+      <label class="form-label">Event Title *</label>
+      <input class="form-input" id="ev-title" placeholder="e.g. Story Time at Bordwell Park">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date *</label>
+        <input class="form-input" id="ev-date" type="date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Time</label>
+        <input class="form-input" id="ev-time" type="time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Location</label>
+      <input class="form-input" id="ev-location" placeholder="e.g. Bordwell Park Rec Center">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="ev-desc" placeholder="What's happening, who it's for..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-check">
+        <input type="checkbox" id="ev-show-on-site" checked>
+        Show on public website
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn-secondary" onclick="closeEventModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveEvent()">Save Event</button>
     </div>
   </div>
 </div>
@@ -291,9 +554,9 @@
   <div class="modal">
     <div class="modal-title">Log Drop-in</div>
     <div style="margin-bottom:0.75rem">
-      <div class="step-label">Step 1 — Sponsor</div>
+      <div class="step-label">Step 1 — Branch</div>
       <select class="form-select" id="d-sponsor" onchange="onSponsorChange()">
-        <option value="">Select a sponsor...</option>
+        <option value="">Select a branch...</option>
       </select>
     </div>
     <div id="d-location-step" style="display:none;margin-bottom:0.75rem">
@@ -357,12 +620,24 @@
   </div>
 </div>
 
+<!-- ORDER VIEW MODAL -->
+<div class="modal-overlay" id="order-modal">
+  <div class="modal">
+    <div class="modal-title">Order Details</div>
+    <div id="order-modal-content"></div>
+    <div class="form-actions">
+      <button class="btn-secondary" onclick="closeOrderModal()">Close</button>
+      <button class="btn-primary" id="order-fulfill-btn" onclick="fulfillOrder()">Mark Fulfilled</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, getDocs, query, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, getDocs, query, orderBy, where, Timestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtBO48uBogqcdv69VO9IH7MIG8Kb1YG10",
@@ -370,59 +645,63 @@ const firebaseConfig = {
   projectId: "idk-money-tracker",
   storageBucket: "idk-money-tracker.firebasestorage.app",
   messagingSenderId: "1033439716188",
-  appId: "1:1033439716188:web:ebf8c149f68d3d568f9799",
-  measurementId: "G-KEZSNJZ4JW"
+  appId: "1:1033439716188:web:ebf8c149f68d3d568f9799"
 };
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-const SPONSORS_COL = 'bookANeighbor_sponsors';
-const DROPINS_COL  = 'bookANeighbor_dropins';
+// Collections
+const SPONSORS_COL = 'bookANeighbor_sponsors'; // existing — now "Branches"
+const DROPINS_COL  = 'bookANeighbor_dropins';  // existing — unchanged
+const INVENTORY_COL = 'tlb_inventory';
+const ORDERS_COL    = 'tlb_orders';
+const STEWARDS_COL  = 'tlb_stewards';
+const EVENTS_COL    = 'tlb_events';
 
-let sponsors = [];
-let dropins  = [];
-let editingSponsorId = null;
+// State
+let branches  = [];
+let dropins   = [];
+let inventory = [];
+let orders    = [];
+let stewards  = [];
+let events    = [];
+let editingBranchId  = null;
+let editingBookId    = null;
+let editingStewardId = null;
+let editingEventId   = null;
+let viewingOrderId   = null;
 let currentPeriod    = 'week';
 
-// AUTH
+// ===================== AUTH =====================
 window.signInWithGoogle = async () => {
   try { await signInWithPopup(auth, new GoogleAuthProvider()); }
   catch(e) { showToast('Sign-in failed: ' + e.message, 'error'); }
 };
 window.signOut = () => fbSignOut(auth);
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   if (user) {
     document.getElementById('auth-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('user-email').textContent = user.email;
-    loadAll();
+    await Promise.all([loadBranches(), loadDropins(), loadInventory(), loadOrders(), loadStewards(), loadEvents()]);
+    renderDashboard();
+    renderBranches();
+    renderInventory();
+    renderOrders();
+    renderStewards();
+    renderEvents();
+    renderDropins();
+    populateBranchSelects();
   } else {
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
   }
 });
 
-// DATA
-async function loadAll() {
-  await Promise.all([loadSponsors(), loadDropins()]);
-  renderSponsors();
-  renderDropins();
-  populateSponsorSelects();
-  renderDashboard();
-}
-async function loadSponsors() {
-  const snap = await getDocs(query(collection(db, SPONSORS_COL), orderBy('name')));
-  sponsors = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-}
-async function loadDropins() {
-  const snap = await getDocs(query(collection(db, DROPINS_COL), orderBy('date', 'desc')));
-  dropins = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-}
-
-// NAV
+// ===================== NAV =====================
 window.showPage = (page, btn) => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -430,144 +709,603 @@ window.showPage = (page, btn) => {
   btn.classList.add('active');
 };
 
-// SPONSORS
-window.renderSponsors = () => {
-  const search = (document.getElementById('sponsor-search').value || '').toLowerCase();
-  const sf     = document.getElementById('sponsor-status-filter').value;
-  const filtered = sponsors.filter(s => {
-    const matchSearch = !search ||
-      s.name.toLowerCase().includes(search) ||
-      (s.contact||'').toLowerCase().includes(search) ||
-      (s.locations||[]).some(l => l.toLowerCase().includes(search));
-    return matchSearch && (!sf || s.status === sf);
-  });
-  const el = document.getElementById('sponsor-list');
-  if (!filtered.length) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📚</div><p>No sponsors yet. Add your first one.</p></div>`;
-    return;
-  }
-  const statusLabel = { active:'Active', pending:'Pending Install', inactive:'Inactive' };
-  el.innerHTML = `<div class="sponsor-grid">${filtered.map(s => {
-    const locs = s.locations || [];
-    const sl   = statusLabel[s.status] || 'Active';
-    return `<div class="sponsor-card">
-      <div class="sponsor-card-header">
-        <div>
-          <div class="sponsor-name">${esc(s.name)}</div>
-          <div class="sponsor-meta">
-            ${s.contact ? esc(s.contact)+'<br>' : ''}
-            ${s.email   ? esc(s.email)+'<br>'   : ''}
-            ${s.phone   ? esc(s.phone)+'<br>'   : ''}
-            ${s.notes   ? '<em>'+esc(s.notes)+'</em>' : ''}
+// ===================== LOAD DATA =====================
+async function loadBranches() {
+  const snap = await getDocs(collection(db, SPONSORS_COL));
+  branches = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  branches.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+}
+async function loadDropins() {
+  const snap = await getDocs(query(collection(db, DROPINS_COL), orderBy('date','desc')));
+  dropins = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+async function loadInventory() {
+  const snap = await getDocs(collection(db, INVENTORY_COL));
+  inventory = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  inventory.sort((a,b) => (a.title||'').localeCompare(b.title||''));
+}
+async function loadOrders() {
+  const snap = await getDocs(query(collection(db, ORDERS_COL), orderBy('createdAt','desc')));
+  orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  updateOrderBadge();
+}
+async function loadStewards() {
+  const snap = await getDocs(collection(db, STEWARDS_COL));
+  stewards = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  stewards.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+}
+async function loadEvents() {
+  const snap = await getDocs(collection(db, EVENTS_COL));
+  events = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  events.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+}
+
+function updateOrderBadge() {
+  const newCount = orders.filter(o => o.status === 'new').length;
+  const badge = document.getElementById('orders-badge');
+  if (newCount > 0) { badge.textContent = newCount; badge.style.display = 'inline'; }
+  else { badge.style.display = 'none'; }
+}
+
+// ===================== DASHBOARD =====================
+window.setPeriod = (period, btn) => {
+  currentPeriod = period;
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashboard();
+};
+function getPeriodStart(p) {
+  const now = new Date();
+  if (p==='all')     return new Date(0);
+  if (p==='week')    { const d=new Date(now); d.setDate(d.getDate()-7); return d; }
+  if (p==='month')   return new Date(now.getFullYear(), now.getMonth(), 1);
+  if (p==='quarter') { const q=Math.floor(now.getMonth()/3); return new Date(now.getFullYear(),q*3,1); }
+  if (p==='year')    return new Date(now.getFullYear(), 0, 1);
+  return new Date(0);
+}
+function renderDashboard() {
+  const start    = getPeriodStart(currentPeriod);
+  const filtered = dropins.filter(d => d.date && new Date(d.date+'T00:00:00') >= start);
+  document.getElementById('stat-branches').textContent   = branches.filter(b => b.status === 'active').length;
+  document.getElementById('stat-inventory').textContent  = inventory.reduce((s,b) => s+(b.quantity||0), 0);
+  document.getElementById('stat-orders-new').textContent = orders.filter(o => o.status === 'new').length;
+  document.getElementById('stat-placed').textContent     = filtered.reduce((s,d)=>s+(d.booksAdded||0),0);
+  document.getElementById('stat-circulated').textContent = filtered.reduce((s,d)=>s+(d.circulated!==undefined?d.circulated:(d.booksAdded||0)),0);
+  document.getElementById('stat-visits').textContent     = filtered.length;
+
+  // Recent orders
+  const recentOrders = orders.slice(0,5);
+  const ordEl = document.getElementById('recent-orders-list');
+  if (!recentOrders.length) { ordEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><p>No orders yet.</p></div>`; }
+  else {
+    ordEl.innerHTML = recentOrders.map(o => {
+      const date = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+      const bookCount = (o.books||[]).reduce((s,b) => s+(b.qty||1), 0);
+      return `<div class="order-card" style="cursor:pointer" onclick="viewOrder('${o.id}')">
+        <div class="order-header">
+          <div>
+            <div class="order-name">${esc(o.name)}</div>
+            <div class="order-meta">${esc(o.lflAddress)} · ${date}</div>
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center">
+            <span class="status-badge status-${o.status||'new'}">${o.status||'new'}</span>
+            <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted)">${bookCount} book${bookCount!==1?'s':''}</span>
           </div>
         </div>
-        <div class="sponsor-actions">
-          <span class="sponsor-status status-${s.status||'active'}">${sl}</span>
-          <button class="btn-sm" onclick="editSponsor('${s.id}')">Edit</button>
-          <button class="btn-danger" onclick="deleteSponsor('${s.id}')">Delete</button>
+      </div>`;
+    }).join('');
+  }
+
+  // Recent drop-ins
+  const recentDropins = dropins.slice(0,5);
+  const drEl = document.getElementById('recent-dropins-list');
+  if (!recentDropins.length) { drEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins yet.</p></div>`; return; }
+  drEl.innerHTML = recentDropins.map(d => {
+    const branch = branches.find(b => b.id === d.sponsorId);
+    const bName  = branch ? branch.name : (d.sponsorName||'Unknown');
+    const date   = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+    return `<div class="dropin-card">
+      <div class="dropin-header" style="margin-bottom:0.5rem">
+        <div>
+          <div class="dropin-location">${esc(bName)}</div>
+          ${d.locationAddress ? `<div class="dropin-sublocation">📍 ${esc(d.locationAddress)}</div>` : ''}
+          <div class="dropin-date">${date}</div>
         </div>
       </div>
-      ${locs.length ? `<div class="sponsor-locations">
-        <div class="sponsor-locations-label">Locations</div>
-        ${locs.map(l=>`<span class="location-pill">📍 ${esc(l)}</span>`).join('')}
+      <div class="dropin-stats">
+        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksBefore??'—'}</span><span class="stat-label">Arrived</span></div>
+        <div class="stat-item"><span class="stat-val added"   style="font-size:1.1rem">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
+        <div class="stat-item"><span class="stat-val removed" style="font-size:1.1rem">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
+        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== BRANCHES =====================
+function renderBranches() {
+  const search = (document.getElementById('branch-search').value||'').toLowerCase();
+  const statusF = document.getElementById('branch-status-filter').value;
+  let filtered = branches.filter(b => {
+    const matchSearch = !search || (b.name||'').toLowerCase().includes(search) || (b.contact||'').toLowerCase().includes(search);
+    const matchStatus = !statusF || b.status === statusF;
+    return matchSearch && matchStatus;
+  });
+  const el = document.getElementById('branch-list');
+  if (!filtered.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">🌿</div><p>No branches found.</p></div>`; return; }
+  el.innerHTML = filtered.map(b => {
+    const locs = b.locations || [];
+    const showOn = b.showOnSite ? 'on' : '';
+    return `<div class="card">
+      <div class="card-header">
+        <div style="flex:1">
+          <div class="card-name">${esc(b.name)}</div>
+          <div class="card-meta">
+            ${b.contact ? esc(b.contact) + '<br>' : ''}
+            ${b.email ? esc(b.email) + '<br>' : ''}
+            ${b.phone ? esc(b.phone) : ''}
+          </div>
+          ${b.notes ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;font-style:italic">${esc(b.notes)}</div>` : ''}
+        </div>
+        <div class="card-actions">
+          <span class="status-badge status-${b.status||'inactive'}">${b.status||'inactive'}</span>
+          <div class="site-toggle" onclick="toggleBranchSite('${b.id}',${!b.showOnSite})">
+            <div class="toggle-switch ${showOn}"></div>
+            <span>On site</span>
+          </div>
+          <button class="btn-sm" onclick="openBranchModal('${b.id}')">Edit</button>
+          <button class="btn-danger" onclick="deleteBranch('${b.id}')">Delete</button>
+        </div>
+      </div>
+      ${locs.length ? `<div class="locations-footer">
+        <div class="locations-label">Locations</div>
+        ${locs.map(l => `<span class="location-pill">📍 ${esc(l)}</span>`).join('')}
       </div>` : ''}
     </div>`;
-  }).join('')}</div>`;
+  }).join('');
+}
+
+window.openBranchModal = (id=null) => {
+  editingBranchId = id;
+  document.getElementById('branch-modal-title').textContent = id ? 'Edit Branch' : 'Add Branch';
+  const b = id ? branches.find(x => x.id === id) : null;
+  document.getElementById('b-name').value    = b?.name    || '';
+  document.getElementById('b-contact').value = b?.contact || '';
+  document.getElementById('b-status').value  = b?.status  || 'active';
+  document.getElementById('b-email').value   = b?.email   || '';
+  document.getElementById('b-phone').value   = b?.phone   || '';
+  document.getElementById('b-notes').value   = b?.notes   || '';
+  document.getElementById('b-show-on-site').checked = b?.showOnSite || false;
+  const locList = document.getElementById('branch-locations-list');
+  locList.innerHTML = '';
+  (b?.locations || ['']).forEach(l => addBranchLocationRow(l));
+  document.getElementById('branch-modal').classList.add('open');
 };
+window.closeBranchModal = () => { document.getElementById('branch-modal').classList.remove('open'); editingBranchId = null; };
 
-window.openSponsorModal = () => {
-  editingSponsorId = null;
-  document.getElementById('sponsor-modal-title').textContent = 'Add Sponsor';
-  ['s-name','s-contact','s-email','s-phone','s-notes'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('s-status').value = 'active';
-  document.getElementById('locations-list').innerHTML = '';
-  document.getElementById('sponsor-modal').classList.add('open');
-};
-
-window.editSponsor = (id) => {
-  const s = sponsors.find(x => x.id === id);
-  if (!s) return;
-  editingSponsorId = id;
-  document.getElementById('sponsor-modal-title').textContent = 'Edit Sponsor';
-  document.getElementById('s-name').value    = s.name    || '';
-  document.getElementById('s-contact').value = s.contact || '';
-  document.getElementById('s-email').value   = s.email   || '';
-  document.getElementById('s-phone').value   = s.phone   || '';
-  document.getElementById('s-notes').value   = s.notes   || '';
-  document.getElementById('s-status').value  = s.status  || 'active';
-  document.getElementById('locations-list').innerHTML = '';
-  (s.locations || []).forEach(l => addLocationRow(l));
-  document.getElementById('sponsor-modal').classList.add('open');
-};
-
-window.closeSponsorModal = () => document.getElementById('sponsor-modal').classList.remove('open');
-
-window.addLocationRow = (value = '') => {
+window.addBranchLocationRow = (val='') => {
   const row = document.createElement('div');
   row.className = 'location-row';
-  row.innerHTML = `<input type="text" class="loc-input" placeholder="123 Main St, Riverside, CA" value="${esc(value)}">
+  row.innerHTML = `<input type="text" placeholder="e.g. 3456 Main St, Riverside" value="${esc(val)}">
     <button class="loc-remove-btn" onclick="this.parentElement.remove()">×</button>`;
-  document.getElementById('locations-list').appendChild(row);
+  document.getElementById('branch-locations-list').appendChild(row);
 };
 
-window.saveSponsor = async () => {
-  const name = document.getElementById('s-name').value.trim();
+window.saveBranch = async () => {
+  const name = document.getElementById('b-name').value.trim();
   if (!name) { showToast('Business name is required', 'error'); return; }
-  const locations = Array.from(document.querySelectorAll('#locations-list .loc-input'))
+  const locs = Array.from(document.querySelectorAll('#branch-locations-list .location-row input'))
     .map(i => i.value.trim()).filter(Boolean);
   const data = {
     name,
-    contact:   document.getElementById('s-contact').value.trim(),
-    email:     document.getElementById('s-email').value.trim(),
-    phone:     document.getElementById('s-phone').value.trim(),
-    notes:     document.getElementById('s-notes').value.trim(),
-    status:    document.getElementById('s-status').value,
-    locations,
+    contact: document.getElementById('b-contact').value.trim(),
+    status:  document.getElementById('b-status').value,
+    email:   document.getElementById('b-email').value.trim(),
+    phone:   document.getElementById('b-phone').value.trim(),
+    notes:   document.getElementById('b-notes').value.trim(),
+    showOnSite: document.getElementById('b-show-on-site').checked,
+    locations: locs,
     updatedAt: Timestamp.now()
   };
   try {
-    if (editingSponsorId) {
-      await setDoc(doc(db, SPONSORS_COL, editingSponsorId), data, { merge: true });
+    if (editingBranchId) {
+      await setDoc(doc(db, SPONSORS_COL, editingBranchId), data, { merge: true });
     } else {
       data.createdAt = Timestamp.now();
       await addDoc(collection(db, SPONSORS_COL), data);
     }
-    closeSponsorModal();
-    await loadSponsors();
-    renderSponsors();
-    populateSponsorSelects();
-    showToast('Sponsor saved', 'success');
+    closeBranchModal();
+    await loadBranches();
+    renderBranches();
+    populateBranchSelects();
+    renderDashboard();
+    showToast(editingBranchId ? 'Branch updated' : 'Branch added', 'success');
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 };
 
-window.deleteSponsor = async (id) => {
-  if (!confirm('Delete this sponsor? Drop-in records will remain.')) return;
+window.deleteBranch = async (id) => {
+  if (!confirm('Delete this branch?')) return;
   try {
     await deleteDoc(doc(db, SPONSORS_COL, id));
-    await loadSponsors();
-    renderSponsors();
-    populateSponsorSelects();
-    showToast('Sponsor deleted', 'success');
+    await loadBranches();
+    renderBranches();
+    populateBranchSelects();
+    renderDashboard();
+    showToast('Branch deleted', 'success');
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 };
 
-// DROP-INS
-window.renderDropins = () => {
-  const filterSponsor = document.getElementById('dropin-sponsor-filter').value;
-  const filtered = filterSponsor ? dropins.filter(d => d.sponsorId === filterSponsor) : dropins;
-  const el = document.getElementById('dropin-list');
-  if (!filtered.length) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins logged yet.</p></div>`;
-    return;
+window.toggleBranchSite = async (id, val) => {
+  try {
+    await updateDoc(doc(db, SPONSORS_COL, id), { showOnSite: val });
+    await loadBranches();
+    renderBranches();
+    showToast(val ? 'Now showing on site' : 'Hidden from site', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===================== INVENTORY =====================
+function renderInventory() {
+  const search = (document.getElementById('book-search').value||'').toLowerCase();
+  const genreF = document.getElementById('book-genre-filter').value;
+  let filtered = inventory.filter(b => {
+    const matchSearch = !search || (b.title||'').toLowerCase().includes(search) || (b.author||'').toLowerCase().includes(search);
+    const matchGenre  = !genreF || b.genre === genreF;
+    return matchSearch && matchGenre;
+  });
+  const el = document.getElementById('book-list');
+  if (!filtered.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📚</div><p>No books in inventory.</p></div>`; return; }
+  el.innerHTML = `<div class="book-grid">${filtered.map(b => {
+    const showOn = b.showOnSite ? 'on' : '';
+    return `<div class="book-card">
+      <div class="book-info">
+        <div class="book-title">${esc(b.title)}</div>
+        ${b.author ? `<div class="book-author">by ${esc(b.author)}</div>` : ''}
+        ${b.genre  ? `<div class="book-genre">${esc(b.genre)}</div>` : ''}
+        ${b.notes  ? `<div style="font-size:0.78rem;color:var(--muted);margin-top:0.25rem;font-style:italic">${esc(b.notes)}</div>` : ''}
+      </div>
+      <div style="text-align:center">
+        <div class="book-qty">${b.quantity||0}</div>
+        <div class="book-qty-label">in stock</div>
+      </div>
+      <div class="book-actions">
+        <div class="site-toggle" onclick="toggleBookSite('${b.id}',${!b.showOnSite})">
+          <div class="toggle-switch ${showOn}"></div>
+          <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted)">On site</span>
+        </div>
+        <button class="btn-sm" onclick="openBookModal('${b.id}')">Edit</button>
+        <button class="btn-danger" onclick="deleteBook('${b.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+window.openBookModal = (id=null) => {
+  editingBookId = id;
+  document.getElementById('book-modal-title').textContent = id ? 'Edit Book' : 'Add Book';
+  const b = id ? inventory.find(x => x.id === id) : null;
+  document.getElementById('bk-title').value  = b?.title  || '';
+  document.getElementById('bk-author').value = b?.author || '';
+  document.getElementById('bk-genre').value  = b?.genre  || "Children's";
+  document.getElementById('bk-qty').value    = b?.quantity ?? 1;
+  document.getElementById('bk-notes').value  = b?.notes  || '';
+  document.getElementById('bk-show-on-site').checked = b?.showOnSite ?? true;
+  document.getElementById('book-modal').classList.add('open');
+};
+window.closeBookModal = () => { document.getElementById('book-modal').classList.remove('open'); editingBookId = null; };
+
+window.saveBook = async () => {
+  const title = document.getElementById('bk-title').value.trim();
+  if (!title) { showToast('Title is required', 'error'); return; }
+  const data = {
+    title,
+    author: document.getElementById('bk-author').value.trim(),
+    genre:  document.getElementById('bk-genre').value,
+    quantity: parseInt(document.getElementById('bk-qty').value)||0,
+    notes:  document.getElementById('bk-notes').value.trim(),
+    showOnSite: document.getElementById('bk-show-on-site').checked,
+    updatedAt: Timestamp.now()
+  };
+  try {
+    if (editingBookId) {
+      await setDoc(doc(db, INVENTORY_COL, editingBookId), data, { merge: true });
+    } else {
+      data.createdAt = Timestamp.now();
+      await addDoc(collection(db, INVENTORY_COL), data);
+    }
+    closeBookModal();
+    await loadInventory();
+    renderInventory();
+    renderDashboard();
+    showToast(editingBookId ? 'Book updated' : 'Book added', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+window.deleteBook = async (id) => {
+  if (!confirm('Delete this book from inventory?')) return;
+  try {
+    await deleteDoc(doc(db, INVENTORY_COL, id));
+    await loadInventory();
+    renderInventory();
+    renderDashboard();
+    showToast('Book deleted', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+window.toggleBookSite = async (id, val) => {
+  try {
+    await updateDoc(doc(db, INVENTORY_COL, id), { showOnSite: val });
+    await loadInventory();
+    renderInventory();
+    showToast(val ? 'Now showing on site' : 'Hidden from site', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===================== ORDERS =====================
+function renderOrders() {
+  const statusF = document.getElementById('order-status-filter').value;
+  let filtered = orders.filter(o => !statusF || o.status === statusF);
+  const el = document.getElementById('order-list');
+  if (!filtered.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><p>No orders yet.</p></div>`; return; }
+  el.innerHTML = filtered.map(o => {
+    const date = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+    const bookCount = (o.books||[]).reduce((s,b) => s+(b.qty||1), 0);
+    return `<div class="order-card" style="cursor:pointer" onclick="viewOrder('${o.id}')">
+      <div class="order-header">
+        <div>
+          <div class="order-name">${esc(o.name)}</div>
+          <div class="order-meta">
+            ${esc(o.lflAddress)}<br>
+            ${o.email ? esc(o.email)+'<br>' : ''}
+            ${o.phone ? esc(o.phone)+'<br>' : ''}
+            Submitted: ${date}
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem">
+          <span class="status-badge status-${o.status||'new'}">${o.status||'new'}</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted)">${bookCount} book${bookCount!==1?'s':''}</span>
+        </div>
+      </div>
+      <div class="order-books">
+        <div class="order-books-label">Books requested</div>
+        ${(o.books||[]).map(b => `<div class="order-book-row"><span>${esc(b.title)}</span><span style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">×${b.qty||1}</span></div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.viewOrder = (id) => {
+  viewingOrderId = id;
+  const o = orders.find(x => x.id === id);
+  if (!o) return;
+  const date = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '—';
+  const bookCount = (o.books||[]).reduce((s,b) => s+(b.qty||1), 0);
+  document.getElementById('order-modal-content').innerHTML = `
+    <div style="margin-bottom:1.25rem">
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:0.25rem">${esc(o.name)}</div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);line-height:1.8">
+        <strong>LFL Address:</strong> ${esc(o.lflAddress)}<br>
+        ${o.email ? `<strong>Email:</strong> ${esc(o.email)}<br>` : ''}
+        ${o.phone ? `<strong>Phone:</strong> ${esc(o.phone)}<br>` : ''}
+        ${o.message ? `<strong>Message:</strong> ${esc(o.message)}<br>` : ''}
+        <strong>Submitted:</strong> ${date}<br>
+        <strong>Status:</strong> <span class="status-badge status-${o.status||'new'}">${o.status||'new'}</span>
+      </div>
+    </div>
+    <div class="order-books">
+      <div class="order-books-label">Books requested (${bookCount} total)</div>
+      ${(o.books||[]).map(b => `<div class="order-book-row"><span>${esc(b.title)}${b.author ? ' <span style="color:var(--muted);font-size:0.8em">by '+esc(b.author)+'</span>' : ''}</span><span style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">×${b.qty||1}</span></div>`).join('')}
+    </div>`;
+  const fulfillBtn = document.getElementById('order-fulfill-btn');
+  if (o.status === 'fulfilled') { fulfillBtn.style.display = 'none'; }
+  else { fulfillBtn.style.display = 'inline-block'; }
+  document.getElementById('order-modal').classList.add('open');
+};
+window.closeOrderModal = () => { document.getElementById('order-modal').classList.remove('open'); viewingOrderId = null; };
+
+window.fulfillOrder = async () => {
+  if (!viewingOrderId) return;
+  try {
+    await updateDoc(doc(db, ORDERS_COL, viewingOrderId), { status: 'fulfilled', fulfilledAt: Timestamp.now() });
+    await loadOrders();
+    renderOrders();
+    renderDashboard();
+    updateOrderBadge();
+    closeOrderModal();
+    showToast('Order marked fulfilled', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===================== STEWARDS =====================
+function renderStewards() {
+  const search = (document.getElementById('steward-search').value||'').toLowerCase();
+  let filtered = stewards.filter(s => !search || (s.name||'').toLowerCase().includes(search) || (s.lflAddress||'').toLowerCase().includes(search));
+  const el = document.getElementById('steward-list');
+  if (!filtered.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">🏡</div><p>No stewards yet.</p></div>`; return; }
+  el.innerHTML = filtered.map(s => `<div class="steward-card">
+    <div class="steward-header">
+      <div>
+        <div class="steward-name">${esc(s.name)}</div>
+        <div class="steward-meta">
+          ${s.lflAddress ? '📍 '+esc(s.lflAddress)+'<br>' : ''}
+          ${s.email ? esc(s.email)+'<br>' : ''}
+          ${s.phone ? esc(s.phone) : ''}
+        </div>
+        ${s.notes ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;font-style:italic">${esc(s.notes)}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn-sm" onclick="openStewardModal('${s.id}')">Edit</button>
+        <button class="btn-danger" onclick="deleteSteward('${s.id}')">Delete</button>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+window.openStewardModal = (id=null) => {
+  editingStewardId = id;
+  document.getElementById('steward-modal-title').textContent = id ? 'Edit Steward' : 'Add LFL Steward';
+  const s = id ? stewards.find(x => x.id === id) : null;
+  document.getElementById('st-name').value    = s?.name       || '';
+  document.getElementById('st-email').value   = s?.email      || '';
+  document.getElementById('st-phone').value   = s?.phone      || '';
+  document.getElementById('st-address').value = s?.lflAddress || '';
+  document.getElementById('st-notes').value   = s?.notes      || '';
+  document.getElementById('steward-modal').classList.add('open');
+};
+window.closeStewardModal = () => { document.getElementById('steward-modal').classList.remove('open'); editingStewardId = null; };
+
+window.saveSteward = async () => {
+  const name = document.getElementById('st-name').value.trim();
+  if (!name) { showToast('Name is required', 'error'); return; }
+  const data = {
+    name,
+    email:      document.getElementById('st-email').value.trim(),
+    phone:      document.getElementById('st-phone').value.trim(),
+    lflAddress: document.getElementById('st-address').value.trim(),
+    notes:      document.getElementById('st-notes').value.trim(),
+    updatedAt: Timestamp.now()
+  };
+  try {
+    if (editingStewardId) {
+      await setDoc(doc(db, STEWARDS_COL, editingStewardId), data, { merge: true });
+    } else {
+      data.createdAt = Timestamp.now();
+      await addDoc(collection(db, STEWARDS_COL), data);
+    }
+    closeStewardModal();
+    await loadStewards();
+    renderStewards();
+    showToast(editingStewardId ? 'Steward updated' : 'Steward added', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+window.deleteSteward = async (id) => {
+  if (!confirm('Delete this steward?')) return;
+  try {
+    await deleteDoc(doc(db, STEWARDS_COL, id));
+    await loadStewards();
+    renderStewards();
+    showToast('Steward deleted', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===================== EVENTS =====================
+function renderEvents() {
+  const el = document.getElementById('event-list');
+  if (!events.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><p>No events yet.</p></div>`; return; }
+  const now = new Date().toISOString().split('T')[0];
+  const upcoming = events.filter(e => e.date >= now);
+  const past     = events.filter(e => e.date <  now);
+
+  let html = '';
+  if (upcoming.length) {
+    html += `<div class="section-divider">Upcoming</div>`;
+    html += upcoming.map(e => renderEventCard(e)).join('');
   }
+  if (past.length) {
+    html += `<div class="section-divider">Past</div>`;
+    html += past.map(e => renderEventCard(e)).join('');
+  }
+  el.innerHTML = html;
+}
+
+function renderEventCard(e) {
+  const showOn = e.showOnSite ? 'on' : '';
+  const dateStr = e.date ? new Date(e.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}) : '—';
+  return `<div class="event-card">
+    <div class="event-header">
+      <div style="flex:1">
+        <div class="event-title">${esc(e.title)}</div>
+        <div class="event-date">${dateStr}${e.time ? ' · '+esc(e.time) : ''}</div>
+        ${e.location ? `<div class="event-location">📍 ${esc(e.location)}</div>` : ''}
+        ${e.description ? `<div class="event-desc">${esc(e.description)}</div>` : ''}
+      </div>
+      <div class="event-actions">
+        <div class="site-toggle" onclick="toggleEventSite('${e.id}',${!e.showOnSite})">
+          <div class="toggle-switch ${showOn}"></div>
+          <span>On site</span>
+        </div>
+        <button class="btn-sm" onclick="openEventModal('${e.id}')">Edit</button>
+        <button class="btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+window.openEventModal = (id=null) => {
+  editingEventId = id;
+  document.getElementById('event-modal-title').textContent = id ? 'Edit Event' : 'Add Event';
+  const e = id ? events.find(x => x.id === id) : null;
+  document.getElementById('ev-title').value    = e?.title       || '';
+  document.getElementById('ev-date').value     = e?.date        || '';
+  document.getElementById('ev-time').value     = e?.time        || '';
+  document.getElementById('ev-location').value = e?.location    || '';
+  document.getElementById('ev-desc').value     = e?.description || '';
+  document.getElementById('ev-show-on-site').checked = e?.showOnSite ?? true;
+  document.getElementById('event-modal').classList.add('open');
+};
+window.closeEventModal = () => { document.getElementById('event-modal').classList.remove('open'); editingEventId = null; };
+
+window.saveEvent = async () => {
+  const title = document.getElementById('ev-title').value.trim();
+  const date  = document.getElementById('ev-date').value;
+  if (!title || !date) { showToast('Title and date are required', 'error'); return; }
+  const data = {
+    title,
+    date,
+    time:        document.getElementById('ev-time').value,
+    location:    document.getElementById('ev-location').value.trim(),
+    description: document.getElementById('ev-desc').value.trim(),
+    showOnSite:  document.getElementById('ev-show-on-site').checked,
+    updatedAt: Timestamp.now()
+  };
+  try {
+    if (editingEventId) {
+      await setDoc(doc(db, EVENTS_COL, editingEventId), data, { merge: true });
+    } else {
+      data.createdAt = Timestamp.now();
+      await addDoc(collection(db, EVENTS_COL), data);
+    }
+    closeEventModal();
+    await loadEvents();
+    renderEvents();
+    showToast(editingEventId ? 'Event updated' : 'Event added', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+window.deleteEvent = async (id) => {
+  if (!confirm('Delete this event?')) return;
+  try {
+    await deleteDoc(doc(db, EVENTS_COL, id));
+    await loadEvents();
+    renderEvents();
+    showToast('Event deleted', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+window.toggleEventSite = async (id, val) => {
+  try {
+    await updateDoc(doc(db, EVENTS_COL, id), { showOnSite: val });
+    await loadEvents();
+    renderEvents();
+    showToast(val ? 'Now showing on site' : 'Hidden from site', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===================== DROP-INS =====================
+function renderDropins() {
+  const filterVal = document.getElementById('dropin-sponsor-filter').value;
+  let filtered = filterVal ? dropins.filter(d => d.sponsorId === filterVal) : dropins;
+  const el = document.getElementById('dropin-list');
+  if (!filtered.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins yet.</p></div>`; return; }
   el.innerHTML = filtered.map(d => {
-    const sponsor = sponsors.find(s => s.id === d.sponsorId);
-    const sName   = sponsor ? sponsor.name : (d.sponsorName || 'Unknown');
-    const date    = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+    const branch = branches.find(b => b.id === d.sponsorId);
+    const bName  = branch ? branch.name : (d.sponsorName||'Unknown');
+    const date   = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) : '—';
     return `<div class="dropin-card">
       <div class="dropin-header">
         <div>
-          <div class="dropin-location">${esc(sName)}</div>
+          <div class="dropin-location">${esc(bName)}</div>
           ${d.locationAddress ? `<div class="dropin-sublocation">📍 ${esc(d.locationAddress)}</div>` : ''}
           <div class="dropin-date">${date}</div>
         </div>
@@ -578,134 +1316,102 @@ window.renderDropins = () => {
         <div class="stat-item"><span class="stat-val added">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
         <div class="stat-item"><span class="stat-val removed">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
         <div class="stat-item"><span class="stat-val neutral">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
-        <div class="stat-item"><span class="stat-val" style="color:${(d.netToShelf??0)>=0?'var(--sage)':'var(--accent)'}">${(d.netToShelf??0)>=0?'+':''}${d.netToShelf??0}</span><span class="stat-label">Net to shelf</span></div>
         <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.circulated??d.booksAdded??0}</span><span class="stat-label">Circulated</span></div>
-        ${d.booksRemoved > 0 ? `
-        <div class="stat-item"><span class="stat-val" style="color:var(--warm)">${d.redistributed??0}</span><span class="stat-label">Redistributed</span></div>
-        <div class="stat-item"><span class="stat-val" style="color:var(--muted)">${d.discarded??0}</span><span class="stat-label">Discarded</span></div>` : ''}
       </div>
       ${d.notes ? `<div class="dropin-notes">${esc(d.notes)}</div>` : ''}
     </div>`;
   }).join('');
-};
+}
 
 window.openDropinModal = () => {
-  lastRemovedVal = 0;
-  document.getElementById('d-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('d-sponsor').value = '';
+  document.getElementById('d-date').value      = new Date().toISOString().split('T')[0];
+  document.getElementById('d-before').value    = 0;
+  document.getElementById('d-added').value     = 0;
+  document.getElementById('d-removed').value   = 0;
+  document.getElementById('d-redistributed').value = 0;
+  document.getElementById('d-discarded').value = 0;
+  document.getElementById('d-notes').value     = '';
+  document.getElementById('d-sponsor').value   = '';
   document.getElementById('d-location-step').style.display = 'none';
-  document.getElementById('d-location').innerHTML = '<option value="">Select a location...</option>';
-  ['d-before','d-added','d-removed','d-redistributed','d-discarded'].forEach(id => document.getElementById(id).value = '0');
-  document.getElementById('d-notes').value = '';
-  document.getElementById('redist-section').style.display = 'none';
-  document.getElementById('redist-error').style.display = 'none';
+  document.getElementById('redist-section').style.display  = 'none';
   updateDropinCalc();
   document.getElementById('dropin-modal').classList.add('open');
 };
 window.closeDropinModal = () => document.getElementById('dropin-modal').classList.remove('open');
 
 window.onSponsorChange = () => {
-  const sponsorId   = document.getElementById('d-sponsor').value;
-  const locationStep = document.getElementById('d-location-step');
-  const locationSel  = document.getElementById('d-location');
-  if (!sponsorId) { locationStep.style.display = 'none'; return; }
-  const sponsor = sponsors.find(s => s.id === sponsorId);
-  const locs    = (sponsor && sponsor.locations) ? sponsor.locations.filter(Boolean) : [];
-  if (!locs.length) { locationStep.style.display = 'none'; return; }
-  locationSel.innerHTML = '<option value="">Select a location...</option>' +
-    locs.map(l => `<option value="${esc(l)}">${esc(sponsor.name)} — ${esc(l)}</option>`).join('');
-  locationStep.style.display = 'block';
-};
-
-let lastRemovedVal = 0;
-window.updateDropinCalc = () => {
-  const before  = parseInt(document.getElementById('d-before').value)  || 0;
-  const added   = parseInt(document.getElementById('d-added').value)   || 0;
-  const removed = parseInt(document.getElementById('d-removed').value) || 0;
-  const after   = before + added - removed;
-  const net     = after - before;
-  const redist  = parseInt(document.getElementById('d-redistributed').value) || 0;
-  const circ    = added + redist;
-
-  document.getElementById('inv-before').textContent  = before;
-  document.getElementById('inv-added').textContent   = '+' + added;
-  document.getElementById('inv-removed').textContent = '-' + removed;
-  document.getElementById('inv-after').textContent   = after;
-  document.getElementById('inv-net').textContent     = (net >= 0 ? '+' : '') + net;
-  document.getElementById('inv-net').style.color     = net >= 0 ? 'var(--sage)' : 'var(--accent)';
-  document.getElementById('inv-circ').textContent    = circ;
-
-  const redistSection = document.getElementById('redist-section');
-  if (removed > 0) {
-    redistSection.style.display = 'block';
-    // Only reset defaults when the removed value itself changes, not on redist/discarded edits
-    if (removed !== lastRemovedVal) {
-      document.getElementById('d-redistributed').value = removed;
-      document.getElementById('d-discarded').value     = 0;
-      lastRemovedVal = removed;
-    }
-    validateRedist(removed);
+  const id = document.getElementById('d-sponsor').value;
+  const branch = branches.find(b => b.id === id);
+  const locStep = document.getElementById('d-location-step');
+  if (branch && branch.locations && branch.locations.length > 1) {
+    document.getElementById('d-location').innerHTML =
+      '<option value="">Select a location...</option>' +
+      branch.locations.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('');
+    locStep.style.display = 'block';
+  } else if (branch && branch.locations && branch.locations.length === 1) {
+    locStep.style.display = 'none';
   } else {
-    redistSection.style.display = 'none';
-    document.getElementById('d-redistributed').value = 0;
-    document.getElementById('d-discarded').value     = 0;
-    lastRemovedVal = 0;
+    locStep.style.display = 'none';
   }
 };
 
-function validateRedist(removed) {
-  const r = parseInt(document.getElementById('d-redistributed').value) || 0;
-  const d = parseInt(document.getElementById('d-discarded').value)     || 0;
-  document.getElementById('redist-error').style.display = (r + d !== removed) ? 'block' : 'none';
-}
-document.getElementById('d-redistributed').addEventListener('input', () => {
-  const rem   = parseInt(document.getElementById('d-removed').value) || 0;
-  const added = parseInt(document.getElementById('d-added').value)   || 0;
-  const redist = parseInt(document.getElementById('d-redistributed').value) || 0;
-  document.getElementById('inv-circ').textContent = added + redist;
-  if (rem > 0) validateRedist(rem);
-});
-document.getElementById('d-discarded').addEventListener('input', () => {
-  const rem = parseInt(document.getElementById('d-removed').value) || 0;
-  if (rem > 0) validateRedist(rem);
-});
+window.updateDropinCalc = () => {
+  const before   = parseInt(document.getElementById('d-before').value)||0;
+  const added    = parseInt(document.getElementById('d-added').value)||0;
+  const removed  = parseInt(document.getElementById('d-removed').value)||0;
+  const redist   = parseInt(document.getElementById('d-redistributed').value)||0;
+  const discard  = parseInt(document.getElementById('d-discarded').value)||0;
+  const after    = before + added - removed;
+  const net      = after - before;
+  const circ     = added + redist;
+  document.getElementById('inv-before').textContent = before;
+  document.getElementById('inv-added').textContent  = '+'+added;
+  document.getElementById('inv-removed').textContent= '-'+removed;
+  document.getElementById('inv-after').textContent  = after;
+  document.getElementById('inv-net').textContent    = (net>=0?'+':'')+net;
+  document.getElementById('inv-circ').textContent   = circ;
+  const redistSection = document.getElementById('redist-section');
+  const redistError   = document.getElementById('redist-error');
+  if (removed > 0) {
+    redistSection.style.display = 'block';
+    redistError.style.display = (redist + discard !== removed && (redist+discard)>0) ? 'block' : 'none';
+  } else {
+    redistSection.style.display = 'none';
+  }
+};
 
 window.saveDropin = async () => {
   const sponsorId = document.getElementById('d-sponsor').value;
-  const date      = document.getElementById('d-date').value;
-  if (!sponsorId) { showToast('Select a sponsor', 'error'); return; }
-  if (!date)      { showToast('Select a date', 'error'); return; }
-
-  const sponsor = sponsors.find(s => s.id === sponsorId);
-  const locs    = (sponsor && sponsor.locations) ? sponsor.locations.filter(Boolean) : [];
-  const locationAddress = locs.length ? document.getElementById('d-location').value : '';
-  if (locs.length && !locationAddress) { showToast('Select a location', 'error'); return; }
-
-  const before        = parseInt(document.getElementById('d-before').value)        || 0;
-  const added         = parseInt(document.getElementById('d-added').value)         || 0;
-  const removed       = parseInt(document.getElementById('d-removed').value)       || 0;
-  const redistributed = parseInt(document.getElementById('d-redistributed').value) || 0;
-  const discarded     = parseInt(document.getElementById('d-discarded').value)     || 0;
-
-  if (removed > 0 && redistributed + discarded !== removed) {
-    showToast('Redistributed + Discarded must equal books removed', 'error'); return;
+  if (!sponsorId) { showToast('Please select a branch', 'error'); return; }
+  const date = document.getElementById('d-date').value;
+  if (!date) { showToast('Date is required', 'error'); return; }
+  const before  = parseInt(document.getElementById('d-before').value)||0;
+  const added   = parseInt(document.getElementById('d-added').value)||0;
+  const removed = parseInt(document.getElementById('d-removed').value)||0;
+  const redist  = parseInt(document.getElementById('d-redistributed').value)||0;
+  const discard = parseInt(document.getElementById('d-discarded').value)||0;
+  const branch  = branches.find(b => b.id === sponsorId);
+  let locationAddress = '';
+  const locStep = document.getElementById('d-location-step');
+  if (locStep.style.display !== 'none') {
+    locationAddress = document.getElementById('d-location').value;
+  } else if (branch && branch.locations && branch.locations.length === 1) {
+    locationAddress = branch.locations[0];
   }
-
   const data = {
     sponsorId,
-    sponsorName: sponsor ? sponsor.name : '',
-    locationAddress,
-    date,
+    sponsorName:  branch ? branch.name : '',
+    locationAddress, date,
     booksBefore:  before,
     booksAdded:   added,
     booksRemoved: removed,
     booksAfter:   before + added - removed,
     netToShelf:   (before + added - removed) - before,
-    redistributed,
-    discarded,
-    circulated:   added + redistributed,
-    notes:     document.getElementById('d-notes').value.trim(),
-    createdAt: Timestamp.now()
+    redistributed: redist,
+    discarded:    discard,
+    circulated:   added + redist,
+    notes:        document.getElementById('d-notes').value.trim(),
+    createdAt:    Timestamp.now()
   };
   try {
     await addDoc(collection(db, DROPINS_COL), data);
@@ -728,65 +1434,15 @@ window.deleteDropin = async (id) => {
   } catch(e) { showToast('Error: ' + e.message, 'error'); }
 };
 
-// DASHBOARD
-window.setPeriod = (period, btn) => {
-  currentPeriod = period;
-  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderDashboard();
-};
-function getPeriodStart(p) {
-  const now = new Date();
-  if (p==='all')     return new Date(0);
-  if (p==='week')    { const d=new Date(now); d.setDate(d.getDate()-7); return d; }
-  if (p==='month')   return new Date(now.getFullYear(), now.getMonth(), 1);
-  if (p==='quarter') { const q=Math.floor(now.getMonth()/3); return new Date(now.getFullYear(),q*3,1); }
-  if (p==='year')    return new Date(now.getFullYear(), 0, 1);
-  return new Date(0);
-}
-function renderDashboard() {
-  const start    = getPeriodStart(currentPeriod);
-  const filtered = dropins.filter(d => d.date && new Date(d.date+'T00:00:00') >= start);
-  document.getElementById('stat-placed').textContent        = filtered.reduce((s,d)=>s+(d.booksAdded||0),0);
-  document.getElementById('stat-circulated').textContent    = filtered.reduce((s,d)=>s+(d.circulated!==undefined?d.circulated:(d.booksAdded||0)),0);
-  document.getElementById('stat-redistributed').textContent = filtered.reduce((s,d)=>s+(d.redistributed||0),0);
-  document.getElementById('stat-discarded').textContent     = filtered.reduce((s,d)=>s+(d.discarded||0),0);
-  document.getElementById('stat-visits').textContent        = filtered.length;
-
-  const recent = dropins.slice(0,5);
-  const el = document.getElementById('recent-dropins-list');
-  if (!recent.length) { el.innerHTML=`<div class="empty-state"><div class="empty-icon">📖</div><p>No drop-ins yet.</p></div>`; return; }
-  el.innerHTML = recent.map(d => {
-    const sponsor = sponsors.find(s => s.id === d.sponsorId);
-    const sName   = sponsor ? sponsor.name : (d.sponsorName||'Unknown');
-    const date    = d.date ? new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
-    return `<div class="dropin-card" style="margin-bottom:0.5rem">
-      <div class="dropin-header" style="margin-bottom:0.5rem">
-        <div>
-          <div class="dropin-location">${esc(sName)}</div>
-          ${d.locationAddress ? `<div class="dropin-sublocation">📍 ${esc(d.locationAddress)}</div>` : ''}
-          <div class="dropin-date">${date}</div>
-        </div>
-      </div>
-      <div class="dropin-stats">
-        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksBefore??'—'}</span><span class="stat-label">Arrived</span></div>
-        <div class="stat-item"><span class="stat-val added"   style="font-size:1.1rem">+${d.booksAdded??0}</span><span class="stat-label">Added</span></div>
-        <div class="stat-item"><span class="stat-val removed" style="font-size:1.1rem">-${d.booksRemoved??0}</span><span class="stat-label">Removed</span></div>
-        <div class="stat-item"><span class="stat-val neutral" style="font-size:1.1rem">${d.booksAfter??'—'}</span><span class="stat-label">Left with</span></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// HELPERS
-function populateSponsorSelects() {
-  const active = sponsors.filter(s => s.status === 'active');
+// ===================== HELPERS =====================
+function populateBranchSelects() {
+  const active = branches.filter(b => b.status === 'active');
   document.getElementById('d-sponsor').innerHTML =
-    '<option value="">Select a sponsor...</option>' +
-    active.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+    '<option value="">Select a branch...</option>' +
+    active.map(b => `<option value="${b.id}">${esc(b.name)}</option>`).join('');
   document.getElementById('dropin-sponsor-filter').innerHTML =
-    '<option value="">All Sponsors</option>' +
-    sponsors.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+    '<option value="">All Branches</option>' +
+    branches.map(b => `<option value="${b.id}">${esc(b.name)}</option>`).join('');
 }
 
 function esc(str) {
@@ -803,8 +1459,11 @@ window.showToast = (msg, type='success') => {
   toastTimer = setTimeout(() => t.className='', 3000);
 };
 
-document.getElementById('sponsor-modal').addEventListener('click', e => { if (e.target===e.currentTarget) closeSponsorModal(); });
-document.getElementById('dropin-modal').addEventListener('click',  e => { if (e.target===e.currentTarget) closeDropinModal();  });
+// Close modals on backdrop click
+['branch-modal','book-modal','steward-modal','event-modal','dropin-modal','order-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+});
+
 </script>
 </body>
 </html>
